@@ -1,0 +1,11 @@
+<?php
+include_once dirname(__FILE__).'/../../include/general.inc.php';
+include_once dirname(__FILE__).'/../base.inc.php';
+header("Content-type: text/html;charset=utf-8");
+//À´Ô´Ò³Ãæ
+if($_SERVER['HTTP_REFERER']){
+	$back=$_SERVER['HTTP_REFERER'];
+}else{
+	$back=$MOBILE_URL;
+}
+?>

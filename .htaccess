@@ -1,0 +1,60 @@
+# Helicon ISAPI_Rewrite configuration file
+
+RewriteEngine On
+
+#搜索站/手机普通版/手机触屏版/txt下载站/后台/会员中心/采集/安装文件
+RewriteRule ^(so|wap|wap_touch|txt|697_admin|member|697_collection|697_LocoySpider|697_QC_Loader|author|install)/$ $1/index.php
+
+
+#书库
+RewriteRule ^shuku(\/)?(\.html)?$ shuku/list_1.html
+RewriteRule ^shuku_([0-9]+)_([1-5])\.html$ shuku/list_$2.html
+RewriteRule ^shuku_([0-9]+)_([0-9]+)\.html$ shuku.php?pages=$1&page=$2
+
+#全本
+RewriteRule ^quanben(\/)?(\.html)?$ quanben/list_1.html
+RewriteRule ^quanben/shuku_([0-9]+)_([1-5])\.html$ quanben/list_$2.html
+RewriteRule ^quanben/shuku_([0-9]+)_([0-9]+)\.html$ quanben.php?pages=$1&page=$2
+
+#栏目首页/排行榜
+RewriteCond $1 !^(sitemap)
+RewriteRule ^(qihuan|wuxia|dushi|lishi|youxi|kehuan|paihang)(\/)?(\.html)?$ $1/index.html
+
+#栏目列表页
+RewriteRule ^(\w+)/shuku\.html$ $1/list_1.html
+RewriteRule ^(\w+)/shuku_([0-9]+)_([1-5])\.html$ $1/list_$3.html
+RewriteRule ^(\w+)/shuku_([0-9]+)_([0-9]+)\.html$ catalog_list.php?id=$1&pages=$2&page=$3
+
+
+#封面页(去掉栏目首页、排行榜、书库)
+RewriteRule ^(.*)/$ page.php?id=$1
+
+#目录页
+RewriteRule ^(.*)/chapter.html$ chapter.php?id=$1
+
+#章节内容页
+RewriteRule ^(.*)/([0-9]+)\.html$ plus/view.php?aid=$2&tdir=$1
+
+
+#plus目录直接访问：章节内容页/广告系统
+RewriteCond $1 !^(list|view|ad_js|stow)
+RewriteRule ^plus\/(\w+)\.php(.*)$ 404.html
+
+#禁止直接访问模版
+RewriteRule ^templets/(.*)/(.*).htm$ 404.html
+
+<IfModule mod_expires.c>
+ExpiresActive On
+ExpiresDefault A600
+ExpiresByType image/x-icon A86400
+ExpiresByType application/x-javascript A86400
+ExpiresByType text/css A604800
+ExpiresByType image/gif A86400
+ExpiresByType image/png A86400
+ExpiresByType image/jpeg A86400
+ExpiresByType text/plain A86400
+ExpiresByType application/x-shockwave-flash A86400
+ExpiresByType video/x-flv A86400
+ExpiresByType application/pdf A86400
+ExpiresByType text/html A600
+</IfModule>
