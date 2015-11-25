@@ -1,0 +1,161 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<?PHP global $I_URL,$DATA_URL,$MOBILE_URL,$FIRST_URL,$FULL_URL; ?>
+<title>登陆 - {dede:global.cfg_webname/}</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link rel="stylesheet" type="text/css" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/css/basic.css" />
+<link rel="stylesheet" type="text/css" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/css/log.css" />
+</head>
+<body class="login">
+<!--body开始-->
+<div class="Layout only_top">
+  <div class="l">欢迎来到<a href="{dede:global.cfg_indexurl/}" title="{dede:global.cfg_webname/}">{dede:global.cfg_webname/}</a></div>
+  <div class="r"><a href="{dede:global.cfg_indexurl/}" title="返回首页">返回首页</a>&nbsp;|&nbsp;<a href="{dede:global.cfg_indexurl/}register.php" title="会员注册">会员注册</a></div>
+</div>
+<div class="clear"></div>
+<div class="Layout no_h">
+  <div class="Con jj_pl inme">
+    <div class="Left">
+      <div class="big_head">
+        <h2>登陆{dede:global.cfg_webname/}通行证</h2>
+      </div>
+      <div class="tip">填写登陆信息&nbsp;&gt;&nbsp;登陆成功</div>
+      <div class="con">
+        <form name="register" id="register" method="post" action="{dede:global.cfg_indexurl/}login.php">
+          <input type="hidden" name="expires" value="1m" />
+          <input type="hidden" name="forward" value="<?=$_GET['forward'];?>" />
+          <div class="name"><span>用户名</span>
+            <input type="text" size="25" name="username" value="" onBlur="checkusername()" onmouseover="input_over(this)" onmouseout="input_out(this)" />
+          </div>
+          <div class="pwd"><span>密码</span>
+            <input type="password" size="25" name="password" value="" onBlur="checkpassword()" onmouseover="input_over(this)" onmouseout="input_out(this)" />
+          </div>
+          <?php
+          $str=mysql_query("SELECT * FROM mconfigs where varname=\"cms_regcode\" limit 1");
+          $row=mysql_fetch_array($str);
+          if(strstr($row[value],"login")){
+          echo '
+              <div class="code"><span>验证码</span>
+                <input type="text" name="regcode" id="regcode" size="4" maxlength="4" onBlur="checkregcode()" onmouseover="input_over(this)" onmouseout="input_out(this)" />
+                <span class="code_img"><img src="regcode.php" alt="点击图片换验证码" title="点击图片换验证码" style="vertical-align:inherit;cursor:pointer;" onclick="this.src=\'regcode.php?t=\'+(new Date).getTime()" /></span>
+                <em id="checkregcode"></em>
+              </div>
+          ';
+          }
+          ?>
+          <div class="btn">
+            <input type="submit" name="cmslogin" value="登陆" />
+            <span>还没有账号，我要</span><a href="{dede:global.cfg_indexurl/}register.php?forward=<?=$_GET['forward'];?>" title="注册">注册</a></div>
+        </form>
+      </div>
+    </div>
+    <div class="Right">
+      <div class="big_head">
+        <h2>不急，先随便逛逛</h2>
+      </div>
+      <div class="r_box jj djb">
+        <div class="head">
+          <div class="line"></div>
+          <h2>{c$nav [tclass=nownav/]}{othertitle}{/c$nav}点击榜</h2>
+          <div class="t_btn"> <a name="zhou" title="">周<span class="j"></span></a> <a name="yue" title="" class="active">月<span class="j"></span></a> <a name="zong" title="">总<span class="j"></span></a> </div>
+        </div>
+        <div class="adbox">{c$ad_djby_144_318_jj}</div>
+        <div class="ul_h"> <span class="pm">排名</span> <span class="sm">书名</span> <span class="djl">点击量</span> </div>
+        <ul class="zhou">
+          <?php
+          /*
+          $url=$FULL_URL."callRPH.php?here=zhou&num=10";
+          $ch=curl_init();
+          curl_setopt($ch,CURLOPT_URL,$url);
+          curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
+          curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,10);
+          echo curl_exec($ch);
+          */
+          ?>
+        </ul>
+        <ul class="yue" style="display:block;">
+          <?php
+          /*
+          $url=$FULL_URL."callRPH.php?here=yue&num=10";
+          $ch=curl_init();
+          curl_setopt($ch,CURLOPT_URL,$url);
+          curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
+          curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,10);
+          echo curl_exec($ch);
+          */
+          ?>
+        </ul>
+        <ul class="zong">
+          <?php
+          /*
+          $url=$FULL_URL."callRPH.php?here=zong&num=10";
+          $ch=curl_init();
+          curl_setopt($ch,CURLOPT_URL,$url);
+          curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
+          curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,10);
+          echo curl_exec($ch);
+          */
+          ?>
+        </ul>
+        <div class="r_box_bot"><a href="{dede:global.cfg_indexurl/}paihang/" title="查看更多排行榜" target="_blank"><span>查看更多</span>[排行榜]</a></div>
+      </div>
+      <div class="rmxx_box">
+        <h2>热门小说</h2>
+        <div class="a_box">
+          <?php
+          /*
+          $url=$FULL_URL."callHOT.php?here=hot&num=18";
+          $ch=curl_init();
+          curl_setopt($ch,CURLOPT_URL,$url);
+          curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
+          curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,10);
+          echo curl_exec($ch);
+          */
+          ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<?php
+	//判断动态或者静态
+	if($enablestatic==0){
+		//动态
+		$over='list.php?ccid4-9.html';
+		$qihuan='index.php?caid-11.html';
+		$wuxia='index.php?caid-22.html';
+		$dushi='index.php?caid-33.html';
+		$lishi='index.php?caid-44.html';
+		$youxi='index.php?caid-55.html';
+		$kehuan='index.php?caid-66.html';
+	}else if($enablestatic==1){
+		//静态
+		$over='over/1.html';
+		$qihuan='qihuan/';
+		$wuxia='wuxia/';
+		$dushi='dushi/';
+		$lishi='lishi/';
+		$youxi='youxi/';
+		$kehuan='kehuan/';
+	}
+?>
+<div class="Layout only_bot">
+  <div class="box"> <a href="{dede:global.cfg_indexurl/}" target="_blank">返回首页</a> <a href="<?=$FIRST_URL.$qihuan;?>" target="_blank">奇幻&middot;玄幻</a> <a href="<?=$FIRST_URL.$wuxia;?>" target="_blank">武侠&middot;仙侠</a> <a href="<?=$FIRST_URL.$dushi;?>" target="_blank">都市&middot;青春</a> <a href="<?=$FIRST_URL.$lishi;?>" target="_blank">历史&middot;军事</a> <a href="<?=$FIRST_URL.$kehuan;?>" target="_blank">科幻&middot;悬疑</a> </div>
+</div>
+<!--body结束-->
+<div style="display:none;">
+  <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/jquery-1.9.0.min.js" charset="utf-8"></script>
+  <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/jquery.lazyload.min.js" charset="utf-8"></script>
+  <script type="text/javascript">$("img.lazy").show().lazyload({placeholder:"{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading.gif",loading:true,threshold:200,failure_limit:10,skip_invisible:false,effect:"fadeIn"});</script>
+  <script type="text/javascript">  $(".t_btn a").hover(function(){$(".t_btn a").removeClass("active");$(this).addClass("active");var ul_class=$(this).attr("name");$(".r_box.djb ul").css("display","none");$(".r_box.djb ul"+"."+ul_class).css("display","block");});</script>
+  <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/z_tpl/ajax.js" charset="utf-8"></script>
+  <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/z_tpl/common.js" charset="utf-8"></script>
+  <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/z_tpl/register.js" charset="utf-8"></script>
+  <script type="text/javascript" src="http://s9.cnzz.com/stat.php?id=4414661&web_id=4414661" charset="utf-8"></script>
+</div>
+</body>
+</html>

@@ -1,0 +1,268 @@
+{dede:include filename="header_inner.tpl.htm"/} 
+<!--body开始--> 
+<script type="text/javascript">
+function Li_Mover(obj,num,num2,tab){	  
+	num2?num2='_'+num2:num2='';
+	if(tab){
+		tab='tab_';
+		$id('box_0'+num+'_zong').className=$id('box_0'+num+'_yue').className=$id('box_0'+num+'_zhou').className='con';
+		$id('box_0'+num+num2).className='con Li_Mover';
+		num2='';
+	}else{
+		tab='';
+	}
+	var liSTR=document.getElementById(tab+"box_0"+num+num2).getElementsByTagName("li");
+	for(i=0;i<liSTR.length;i++){
+		liSTR.item(i).className="";
+	}
+	obj.className="Li_Mover";
+}
+</script>
+<div class="Layout local">
+  <?='当前位置：<a href="'.$cfg_indexurl.'">'.sbyou_net_sysconfig('cfg_webname').'</a>&nbsp;&gt;&nbsp;<a href="'.$cfg_indexurl.SBYOU_NET_catalog('375','typedir').'.html">'.SBYOU_NET_catalog('375','typename').'</a>';?>
+</div>
+<div class="Layout list">
+  <div class="Head">
+    <h2>排行榜</h2>
+    <span>Ranking</span> <span class="j"></span>
+    <div class="morelist">
+      <div class="more">排行榜每三小时自动更新一次，为书友们提供最新最火爆的小说排行榜！</div>
+    </div>
+  </div>
+  <div class="Con">
+    <div class="Left">
+      <div style="padding:10px 10px 0px;"><script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=14"></script></div>
+      <div class="topList">
+        <div class="tit">
+          <h3>全网小说点击榜</h3>
+          <ul id="tab_box_01">
+            <li onmouseover="Li_Mover(this,'1','zong','tab')">总</li>
+            <li class="Li_Mover" onmouseover="Li_Mover(this,'1','yue','tab')">月</li>
+            <li onmouseover="Li_Mover(this,'1','zhou','tab')">周</li>
+          </ul>
+        </div>
+        <div class="con" id="box_01_zong">
+          <?=panghang('bookclick','1','zong');?>
+        </div>
+        <div class="con Li_Mover" id="box_01_yue">
+          <?=panghang('bookclickm','1','yue');?>
+        </div>
+        <div class="con" id="box_01_zhou">
+          <?=panghang('bookclickw','1','zhou');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+      <div class="topList">
+        <div class="tit">
+          <h3>全网小说推荐榜</h3>
+          <ul id="tab_box_02">
+            <li onmouseover="Li_Mover(this,'2','zong','tab')">总</li>
+            <li class="Li_Mover" onmouseover="Li_Mover(this,'2','yue','tab')">月</li>
+            <li onmouseover="Li_Mover(this,'2','zhou','tab')">周</li>
+          </ul>
+        </div>
+        <div class="con" id="box_02_zong">
+          <?=panghang('tuijian','2','zong');?>
+        </div>
+        <div class="con Li_Mover" id="box_02_yue">
+          <?=panghang('tuijianm','2','yue');?>
+        </div>
+        <div class="con" id="box_02_zhou">
+          <?=panghang('tuijianw','2','zhou');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+      <div class="topList">
+        <div class="tit">
+          <h3>全网小说字数榜</h3>
+          <ul>
+            <li class="Li_Mover">总</li>
+          </ul>
+        </div>
+        <div class="con Li_Mover" id="box_03">
+          <?=panghang('booksize','3','');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+      <div class="topList">
+        <div class="tit">
+          <h3>
+            <?='<a href="'.$BOOK_URL.SBYOU_NET_catalog('11','typedir').'.html" title="'.SBYOU_NET_catalog('11','typename').'" target="_blank">'.SBYOU_NET_catalog('11','typename').'<'.'/a>/排行榜';?>
+          </h3>
+          <ul id="tab_box_04">
+            <li onmouseover="Li_Mover(this,'4','zong','tab')">总</li>
+            <li class="Li_Mover" onmouseover="Li_Mover(this,'4','yue','tab')">月</li>
+            <li onmouseover="Li_Mover(this,'4','zhou','tab')">周</li>
+          </ul>
+        </div>
+        <div class="con" id="box_04_zong">
+          <?=panghang('11','4','zong');?>
+        </div>
+        <div class="con Li_Mover" id="box_04_yue">
+          <?=panghang('11','4','yue');?>
+        </div>
+        <div class="con" id="box_04_zhou">
+          <?=panghang('11','4','zhou');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+      <div class="topList">
+        <div class="tit">
+          <h3>
+            <?='<a href="'.$BOOK_URL.SBYOU_NET_catalog('11','typedir').'.html" title="'.SBYOU_NET_catalog('11','typename').'" target="_blank">'.SBYOU_NET_catalog('22','typename').'<'.'/a>/排行榜';?>
+          </h3>
+          <ul id="tab_box_05">
+            <li onmouseover="Li_Mover(this,'5','zong','tab')">总</li>
+            <li class="Li_Mover" onmouseover="Li_Mover(this,'5','yue','tab')">月</li>
+            <li onmouseover="Li_Mover(this,'5','zhou','tab')">周</li>
+          </ul>
+        </div>
+        <div class="con" id="box_05_zong">
+          <?=panghang('22','5','zong');?>
+        </div>
+        <div class="con Li_Mover" id="box_05_yue">
+          <?=panghang('22','5','yue');?>
+        </div>
+        <div class="con" id="box_05_zhou">
+          <?=panghang('22','5','zhou');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+      <div class="topList">
+        <div class="tit">
+          <h3>
+            <?='<a href="'.$BOOK_URL.SBYOU_NET_catalog('11','typedir').'.html" title="'.SBYOU_NET_catalog('11','typename').'" target="_blank">'.SBYOU_NET_catalog('33','typename').'<'.'/a>/排行榜';?>
+          </h3>
+          <ul id="tab_box_06">
+            <li onmouseover="Li_Mover(this,'6','zong','tab')">总</li>
+            <li class="Li_Mover" onmouseover="Li_Mover(this,'6','yue','tab')">月</li>
+            <li onmouseover="Li_Mover(this,'6','zhou','tab')">周</li>
+          </ul>
+        </div>
+        <div class="con" id="box_06_zong">
+          <?=panghang('33','6','zong');?>
+        </div>
+        <div class="con Li_Mover" id="box_06_yue">
+          <?=panghang('33','6','yue');?>
+        </div>
+        <div class="con" id="box_06_zhou">
+          <?=panghang('33','6','zhou');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+      <div class="topList">
+        <div class="tit">
+          <h3>
+            <?='<a href="'.$BOOK_URL.SBYOU_NET_catalog('11','typedir').'.html" title="'.SBYOU_NET_catalog('11','typename').'" target="_blank">'.SBYOU_NET_catalog('44','typename').'<'.'/a>/排行榜';?>
+          </h3>
+          <ul id="tab_box_07">
+            <li onmouseover="Li_Mover(this,'7','zong','tab')">总</li>
+            <li class="Li_Mover" onmouseover="Li_Mover(this,'7','yue','tab')">月</li>
+            <li onmouseover="Li_Mover(this,'7','zhou','tab')">周</li>
+          </ul>
+        </div>
+        <div class="con" id="box_07_zong">
+          <?=panghang('44','7','zong');?>
+        </div>
+        <div class="con Li_Mover" id="box_07_yue">
+          <?=panghang('44','7','yue');?>
+        </div>
+        <div class="con" id="box_07_zhou">
+          <?=panghang('44','7','zhou');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+      <div class="topList">
+        <div class="tit">
+          <h3>
+            <?='<a href="'.$BOOK_URL.SBYOU_NET_catalog('11','typedir').'.html" title="'.SBYOU_NET_catalog('11','typename').'" target="_blank">'.SBYOU_NET_catalog('55','typename').'<'.'/a>/排行榜';?>
+          </h3>
+          <ul id="tab_box_08">
+            <li onmouseover="Li_Mover(this,'8','zong','tab')">总</li>
+            <li class="Li_Mover" onmouseover="Li_Mover(this,'8','yue','tab')">月</li>
+            <li onmouseover="Li_Mover(this,'8','zhou','tab')">周</li>
+          </ul>
+        </div>
+        <div class="con" id="box_08_zong">
+          <?=panghang('55','8','zong');?>
+        </div>
+        <div class="con Li_Mover" id="box_08_yue">
+          <?=panghang('55','8','yue');?>
+        </div>
+        <div class="con" id="box_08_zhou">
+          <?=panghang('55','8','zhou');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+      <div class="topList">
+        <div class="tit">
+          <h3>
+            <?='<a href="'.$BOOK_URL.SBYOU_NET_catalog('11','typedir').'.html" title="'.SBYOU_NET_catalog('11','typename').'" target="_blank">'.SBYOU_NET_catalog('66','typename').'<'.'/a>/排行榜';?>
+          </h3>
+          <ul id="tab_box_09">
+            <li onmouseover="Li_Mover(this,'9','zong','tab')">总</li>
+            <li class="Li_Mover" onmouseover="Li_Mover(this,'9','yue','tab')">月</li>
+            <li onmouseover="Li_Mover(this,'9','zhou','tab')">周</li>
+          </ul>
+        </div>
+        <div class="con" id="box_09_zong">
+          <?=panghang('66','9','zong');?>
+        </div>
+        <div class="con Li_Mover" id="box_09_yue">
+          <?=panghang('66','9','yue');?>
+        </div>
+        <div class="con" id="box_09_zhou">
+          <?=panghang('66','9','zhou');?>
+        </div>
+        <div class="more">
+          <?=$now_time;?>
+        </div>
+      </div>
+    </div>
+    <div class="Right">
+      <div class="r_box author"> {dede:php}echo sBYou_net_zzzf();{/dede:php} </div>
+      <div class="r_box author art"> {dede:php}echo sbYou_Net_dbz();{/dede:php} </div>
+      <div class="r_box ad ad200"> 
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=3"></script> 
+      </div>
+      <div class="r_box cmztj cn">
+        <div class="head">
+          <h2>成名作推荐</h2>
+        </div>
+        <ul>
+          {dede:php}echo SBYoU_Net_cmztj();{/dede:php}
+        </ul>
+      </div>
+      <div class="r_box rmwbtj cn">
+        <div class="head">
+          <h2>热门完本推荐</h2>
+        </div>
+        <ul>
+          {dede:php}echo SbYoU_Net_rmwbtj();{/dede:php}
+        </ul>
+      </div>
+      <div class="r_box ad ad200"> 
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=4"></script> 
+      </div>
+    </div>
+  </div>
+</div>
+<!--body结束-->
+<div class="clear"></div>
+{dede:include filename="footer_inner.tpl.htm"/} 

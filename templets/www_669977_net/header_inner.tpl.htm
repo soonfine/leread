@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{dede:php}
+$page_typename=$arctype_row[typename];
+$page_zuozhe=$arctype_row[zuozhe];
+$catalog_typename=str_replace('·','',SBYOU_NET_catalog($id,'typename'));
+
+$catalog_title=SBYOU_NET_catalog($tid,'seotitle').'_'.$cfg_webname;
+$catalog_list_title='好看的'.$catalog_typename.'小说大全_好看的'.$catalog_typename.'小说推荐_'.$cfg_webname;
+$page_title=$page_typename.'最新章节_'.$page_typename.'无弹窗_'.$page_zuozhe.'新书作品'.'_'.$cfg_webname;
+$paihang_title='新书榜_新书排行榜_新书推荐榜_最新小说排行榜_'.$cfg_webname;
+$shuku_title='好看的小说大全_好看的小说推荐_'.$cfg_webname;
+$quanben_title='全本小说_好看的全本小说推荐_'.$cfg_webname;
+$author_title=$zuozhe.'_'.$zuozhe.'最新小说_'.$cfg_webname;
+
+//栏目页
+if($tid){
+  echo $catalog_title;
+}
+//栏目列表页
+if($sbyou_net_id=='catalog_list'){
+  echo $catalog_list_title;
+  $catalog_list_keywords=$catalog_typename.'小说,'.$catalog_typename.'小说书库';
+  $catalog_list_description=$catalog_typename.'小说书库，最新最好看的'.$catalog_typename.'小说尽在新书在线'.$cfg_webname.'！';
+}
+//简介页
+if($arctype_row['topid']){
+  echo $page_title;
+$page_keywords=$page_typename.','.$page_typename.'小说,'.$page_typename.$page_zuozhe.','.$page_typename.'无弹窗,'.$page_typename.'txt,'.$page_typename.'txt下载,'.$page_typename.'在线阅读';
+    $page_description=$page_zuozhe.'的新书'.$page_typename.'最新章节已经更新，新书在线提供'.$page_zuozhe.'的小说作品'.$page_typename.'无弹窗阅读和'.$page_typename.'txt下载全集电子书免费下载。'.$page_typename.'免费在线阅读尽在'.$cfg_webname.'！';
+}
+//排行榜
+if($sbyou_net=='ph'){
+  echo $paihang_title;
+  $paihang_keywords='新书榜,新书排行榜,新书推荐榜,最新小说排行榜';
+	$paihang_description=$cfg_webname.'实时提供最新小说排行榜，新书排行榜以及新书推荐榜，包括最新玄幻小说排行榜、仙侠小说排行榜、言情小说排行榜等，排行榜时时更新，为书友们提供最新的小说排行信息！';
+}
+//书库
+if($sbyou_net=='over'){
+  echo $shuku_title;
+  $shuku_keywords='小说,小说书库';
+  $shuku_description='小说书库，最新最好看的小说尽在'.$cfg_webname.'！';
+}
+//全本小说
+if($sbyou_net=='quanben'){
+  echo $quanben_title;
+  $shuku_keywords='全本小说,全本小说书库';
+  $shuku_description='全本小说，最新最好看的全本小说尽在'.$cfg_webname.'！';
+}
+//作者列表
+if($sbyou_net=='author'){
+  echo $author_title;
+  $author_keywords=$zuozhe.',热门作者'.$zuozhe.',当前最火爆的作者'.$zuozhe.',大神作者'.$zuozhe;
+  $author_description=$cfg_webname.'提供热门作者'.$zuozhe.'，最新最火爆的作者'.$zuozhe.'的最新小说！';
+}
+{/dede:php}</title>
+<meta name="keywords" content="{dede:php}echo $page_keywords.$paihang_keywords.$shuku_keywords.$catalog_list_keywords.$author_keywords;{/dede:php}{dede:field name='keywords'/},{dede:global.cfg_webname/}" />
+<meta name="description" content="{dede:php}echo $page_description.$paihang_description.$shuku_description.$catalog_list_description.$author_description;{/dede:php}{dede:field name='description' function='html2text(@me)'/}" />
+<meta name="author" content="{dede:global.cfg_webname/}">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<base href="{dede:global.cfg_basehost/}{dede:global.cfg_indexurl/}" />
+<script type="text/javascript">var BOOK_URL="{dede:global.cfg_basehost/}{dede:global.cfg_indexurl/}";</script>
+<link rel="stylesheet" type="text/css" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/css/basic.css" />
+<link rel="stylesheet" type="text/css" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/css/body_inner.css" />
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/common.js"></script>
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/xmlJS.js"></script>
+</head>
+<body class="body{dede:php}echo $tid.$arctype_row['topid'].$sbyou_net;if($sbyou_net){echo ' bodyover';}{/dede:php}">
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=15"></script>
+<!--<script type="text/javascript" src="http://ad.669977.net/?entry=tan&js=1&o=1"></script>-->
+<!--header开始-->
+<div class="Layout topbox">
+  <div class="topbar">
+    <div class="mainbox">
+      <div class="left_con" id="loginInfo">
+        <ul>
+          <li><img style="position:relative;top:1px;" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading_data.gif" />&nbsp;登陆信息加载中...</li>
+        </ul>
+      </div>
+      <div style="float:left">
+          <script type="text/javascript">(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=16339597657006466298' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();</script>
+      </div>
+      <div class="right_con">
+        <ul class="UL">
+          <li>本站所有小说，均为<font class="red">&nbsp;50万字&nbsp;</font>以上！</li>
+          <li><em class="ver">|</em><a href="javascript:" title="加入收藏夹" onclick="addBookmark()">加入收藏夹</a></li>
+        </ul>
+        <ul class="fUL">
+          <li><a href="{dede:global.cfg_indexurl/}" title="返回首页">返回首页</a></li>
+          {dede:php}
+          global $dsql,$cfg_indexurl;
+          $s="";
+          $query = "SELECT * FROM dede_arctype WHERE reid=0 and id<>45 order by sortrank";
+          $dsql->SetQuery($query);
+          $dsql->Execute();
+          while($row=$dsql->GetArray()){
+          if($row['id']!=375 & $row['id']!=376){
+          $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+          ($row[id]==$tid || $row[id]==$arctype_row['topid'] || $row[id]==$id)?$lm_class=' class="cur"':$lm_class='';
+          $s.='
+          <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$lm_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+          ';
+          }
+          if($row['id']==375){
+          $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+          ($reidrow[reid]==$row['id']||$sbyou_net=='ph')?$ph_class=' class="cur"':$ph_class='';
+          $ph='
+          <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+          ';
+          }
+          if($row['id']==376){
+          $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+          ($reidrow[reid]==$row['id']||$sbyou_net=='over')?$sk_class=' class="cur"':$sk_class='';
+          $sk='
+          <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$sk_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+          ';
+          }
+          }
+          $sbyou_net=='quanben'?$sk_class=' class="cur"':$sk_class='';
+          $qb='
+          <li><em class="ver">|</em><a href="'.$cfg_indexurl.'quanben.html"'.$sk_class.' title="全本小说">全本小说</a></li>
+          ';
+          echo $s.$ph.$sk.$qb;
+          {/dede:php}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="Layout h">
+  <div class="header">
+    <div class="top">
+      <div class="logo"><a href="{dede:global.cfg_indexurl/}" title="{dede:global.cfg_webname/}"><img src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/logo.png" alt="{dede:global.cfg_webname/}" /></a></div>
+      <div class="c_con">
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=2"></script>
+      </div>
+      <div class="s_box">
+        <div class="s_entry"><a href="{dede:php}echo $SEARCH_URL;{/dede:php}?fuck=author" title="作者" target="_blank">作者</a><a href="{dede:php}echo $SEARCH_URL;{/dede:php}top/" title="专题" target="_blank">专题</a><a href="{dede:global.cfg_indexurl/}paihang.html" title="排行" target="_blank">排行</a></div>
+        <form name="searchform" id="searchform" method="get" target="_blank" action="{dede:php}echo $SEARCH_URL;{/dede:php}">
+          <input name="searchword" id="searchword" type="text" maxlength="18" value="请输入您要搜索的内容" onfocus="if(this.value=='请输入您要搜索的内容'){this.value=''}" onblur="if(this.value==''){this.value='请输入您要搜索的内容'}" onclick="this.select()" />
+          <input type="submit" value="搜索" id="s_btn" />
+        </form>
+        <div class="hotword">
+          <h3>热门搜索：</h3>
+          {dede:php} echo SByou_net_search_keywords();{/dede:php} </div>
+      </div>
+    </div>
+    <div class="nav">
+      <div class="box"> <a href="{dede:global.cfg_indexurl/}" class="home" title="首页">首页</a> {dede:php}
+        global $dsql,$cfg_indexurl;
+        $s="";
+        $query = "SELECT * FROM dede_arctype WHERE reid=0 and id<>45 order by sortrank";
+        $dsql->SetQuery($query);
+        $dsql->Execute();
+        while($row=$dsql->GetArray()){
+        if($row['id']!=375 && $row['id']!=376){
+        $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+        ($row[id]==$tid || $row[id]==$arctype_row['topid'] || $row[id]==$id)?$lm_class=' class="cur"':$lm_class='';
+        $s.='<a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$lm_class.' title="'.$row['typename'].'">'.$row['typename'].'</a>';
+        }
+        if($row['id']==375){
+        $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+        ($reidrow[reid]==$row['id']||$sbyou_net=='ph')?$ph_class=' class="cur"':$ph_class='';
+        $ph='<a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.$row['typename'].'">['.$row['typename'].']</a>';
+        }
+        if($row['id']==376){
+        $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+        ($reidrow[reid]==$row['id']||$sbyou_net=='over')?$sk_class=' class="cur"':$sk_class='';
+        $sk='<a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$sk_class.' title="'.$row['typename'].'">['.$row['typename'].']</a>';
+        }
+        }
+        $sbyou_net=='quanben'?$sk_class=' class="cur"':$sk_class='';
+        $qb='<a href="'.$cfg_indexurl.'quanben.html"'.$sk_class.' title="全本小说">[全本小说]</a>';
+        echo $s.$ph.$sk.$qb;
+        {/dede:php} </div>
+    </div>
+  </div>
+</div>
+<!--header结束-->
+<div class="clear"></div>

@@ -1,0 +1,25 @@
+<div id="footer" class="wrapper aGray grayA">
+  <ul class="fLeftChild">
+    {dede:php}
+    $dsql->SetQuery("select * from dede_arctype where topid=0 and id!=45 order by id asc");
+    $dsql->Execute();
+    while($sbyou_net=$dsql->GetObject())
+    {
+    if(($sbyou_net->id)!=375 && ($sbyou_net->id)!=376){
+    $ca.='
+    <li><a href="'.$sbyou_net->typedir.'" title="'.$sbyou_net->webname.'" target="_blank">'.$sbyou_net->typename.'</a></li>
+    ';
+    }
+    if(($sbyou_net->id)==375 || ($sbyou_net->id)==376){
+    $pai_ku.='
+    <li><a href="'.$sbyou_net->typedir.'" title="'.$sbyou_net->webname.'" target="_blank">'.$sbyou_net->typename.'</a></li>
+    ';
+    }
+    }
+    echo '
+    <li><a href="'.$BOOK_URL.'" title="返回首页" target="_blank">返回首页</a></li>
+    '.$pai_ku.$ca;
+    {/dede:php}
+  </ul>
+</div>
+<div class="clearfix"></div>

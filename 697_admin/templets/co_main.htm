@@ -1,0 +1,277 @@
+{dede:config.pagesize value="20"/}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $cfg_soft_lang; ?>">
+<title>采集节点管理</title>
+<script language="javascript" src="js/context_menu.js"></script>
+<script language="javascript" src="js/ieemu.js"></script>
+<script language="javascript">
+function getCheckboxItem()
+{
+	var allSel="";
+	if(document.form1.nids.value) return document.form1.nids.value;
+	for(i=0;i<document.form1.nids.length;i++)
+	{
+		if(document.form1.nids[i].checked)
+		{
+			if(allSel=="")
+				allSel=document.form1.nids[i].value;
+			else
+				allSel=allSel+","+document.form1.nids[i].value;
+		}
+	}
+	return allSel;	
+}
+function ReSel()
+{
+	for(i=0;i<document.form1.nids.length;i++)
+	{
+		if(document.form1.nids[i].checked) document.form1.nids[i].checked = false;
+		else document.form1.nids[i].checked = true;
+	}
+}
+if(moz) {
+	extendEventObject();
+	extendElementModel();
+	emulateAttachEvent();
+}
+//编辑节点
+function EditNote(nid)
+{
+	if(nid=="") nid = getOneItem();
+  if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_edit.php?nid="+nid;
+}
+//编辑节点配置
+function EditNoteText(nid)
+{
+	if(nid=="") nid = getOneItem();
+  if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_edit_text.php?nid="+nid;
+}
+//清空节点
+function ClearNote(nid)
+{
+	if(nid=="") nid = getCheckboxItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_do.php?dopost=clear&nid="+nid;
+}
+//变更状态
+function changerenid(nid)
+{
+	if(nid=="") nid = getCheckboxItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_do.php?dopost=changerenid&nid="+nid;
+}
+//删除节点
+function DelNote(nid)
+{
+	if(nid=="") nid = getCheckboxItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	if(window.confirm('你确定要删除这些节点吗?'))
+	{ location.href = "co_do.php?dopost=delete&nid="+nid; }
+}
+//设置为半自动
+function setauto(nid)
+{
+	if(nid=="") nid = getCheckboxItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	if(window.confirm('你确定要把这些规则设置为半自动吗?'))
+	{ location.href = "co_do.php?dopost=auto&nid="+nid; }
+}
+//设置为全自动
+function setnoeor(nid)
+{
+	if(nid=="") nid = getCheckboxItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	if(window.confirm('你确定要把这些规则设置为全自动吗?'))
+	{ location.href = "co_do.php?dopost=noeor&nid="+nid; }
+}
+//设置为手动
+function setnoco(nid)
+{
+	if(nid=="") nid = getCheckboxItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	if(window.confirm('你确定要把这些规则设置为手动吗?'))
+	{ location.href = "co_do.php?dopost=noco&nid="+nid; }
+}
+//替换规则
+function setcgn(nid)
+{
+	if(nid=="") nid = getCheckboxItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	if(window.confirm('你确定要替换这些规则吗?'))
+	{ location.href = "co_do.php?dopost=setcgn&nid="+nid; }
+}
+//查看已下载的内容
+function ViewDown(nid)
+{
+	if(nid=="") nid = getOneItem();
+	location.href = "co_url.php?nid="+nid;
+}
+//测试规则
+function TestRule(nid)
+{
+	if(nid=="") nid = getOneItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_test_rule.php?nid="+nid;
+}
+//导出采集
+function ExportDown(nid)
+{
+	if(nid=="") nid = getOneItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_export.php?nid="+nid;;
+}
+function bang(nid)
+{
+	if(nid=="") nid = getOneItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_bang.php?nid="+nid;;
+}
+//导入规则
+function GetRule()
+{
+	location.href = "co_get_corule.php";
+}
+//导出规则
+function ExportRule(nid)
+{
+	if(nid=="") nid = getOneItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_export_corule.php?nid="+nid;
+}
+
+//采集所选节点
+function GatherSel(nid)
+{
+	if(nid=="") nid = getCheckboxItem();
+	if(nid==""){ window.open("../697_collection/");return;}
+	window.open("../697_collection/?nid="+nid);
+}
+//复制所选节点
+function CopyNote(nid)
+{
+	if(nid=="") nid = getOneItem();
+	if(nid==""){ alert("请选择一个节点！"); return;}
+	location.href = "co_do.php?dopost=copy&nid="+nid;
+}
+//上下文菜单
+function ShowMenu(evt,obj,nid)
+{
+  var eobj,popupoptions
+  popupoptions = [
+    new ContextItem("测试当前节点",function(){ TestRule(nid); }),
+    new ContextItem("采集当前节点",function(){ GatherSel(nid); }),
+    new ContextSeperator(),
+    new ContextItem("更改当前节点",function(){ EditNote(nid); }),
+    new ContextItem("更改节点配置",function(){ EditNoteText(nid); }),
+    new ContextSeperator(),
+    new ContextItem("查看采集内容",function(){ ViewDown(nid); }),
+    new ContextItem("导出采集",function(){ ExportDown(nid); }),
+    new ContextSeperator(),
+    new ContextItem("清空已下载信息",function(){ ClearNote(nid); }),
+    new ContextItem("删除当前节点",function(){ DelNote(nid); }),
+    new ContextSeperator(),
+    new ContextItem("复制当前节点",function(){ CopyNote(nid); }),
+    new ContextSeperator(),
+    new ContextItem("导出配置规则",function(){ ExportRule(nid); }),
+    new ContextItem("关闭菜单(<u>C</u>)",function(){})
+  ]
+  ContextMenu.display(evt,popupoptions)
+}
+//获得选中其中一个的id
+function getOneItem()
+{
+	var allSel="";
+	if(document.form1.nids.value) return document.form1.nids.value;
+	for(i=0;i<document.form1.nids.length;i++)
+	{
+		if(document.form1.nids[i].checked)
+		{
+				allSel = document.form1.nids[i].value;
+				break;
+		}
+	}
+	return allSel;	
+}
+//点击该行可以改变该行的颜色
+var currentActiveRow;
+function changeActiveRow(obj) {
+	currentActiveRow = obj;
+	var rowcolor;
+	rowcolor=currentActiveRow.style.backgroundColor;
+	if (rowcolor=="#F2F2F2"){
+		currentActiveRow.style.backgroundColor = "";
+	}
+	else
+	{
+		currentActiveRow.style.backgroundColor = "#F2F2F2";
+	}
+}
+//所有勾选的行都改变颜色
+function tr_bgcolor(c){
+var tr = c.parentNode.parentNode;
+tr.rowIndex % 1 == 1 ? tr.style.backgroundColor = c.checked ? '#ffff00' : '#FFFFF' : tr.style.backgroundColor = c.checked ? '#ffff00' : '';
+} 
+</script>
+<link href="css/base.css" rel="stylesheet" type="text/css">
+</head>
+<body background='images/allbg.gif' leftmargin='8' topmargin='8' onLoad="ContextMenu.intializeContextMenu()">
+<table border="0" cellpadding="3" cellspacing="1" bgcolor="#D1DDAA" align="left">
+  <tr>
+    <td height="20" colspan="10" background='images/tbg.gif'><table width="100%" border="0" cellpadding="0" cellspacing="0">
+        <tr>
+          <td width="100%" height="18"><strong>采集节点管理：</strong><span style="color:#F00; line-height:23px; font-weight:bold">直接点击“开始采集”即可，不用全选，不用设置全自动，直接点击开始采集</span></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr align="center" bgcolor="#FAFAF1">
+    <td width="30px">选择</td>
+    <td width="300px">节点名称</td>
+    <td width="420px">节点操作</td>
+    <td width="60px">采集类型</td>
+    <td width="60px">规则类型</td>
+    <td width="120px">最后采集时间</td>
+    <td width="120px">加入日期</td>
+    <td width="40px">编码</td>
+    <td width="100px">网址数</td>
+    <td width="100px">备注</td>
+  </tr>
+  <form name="form1">
+    {dede:datalist}
+    <tr bgcolor="#FFFFFF" align="center" onMouseMove="javascript:this.bgColor='#ddffff';"
+    	 onMouseOut="javascript:this.bgColor='#FFFFFF';" height="22" oncontextmenu="ShowMenu(event,this,{dede:field.nid /});">
+      <td><input type='checkbox' name='nids' value='{dede:field.nid /}' class='np' onclick="tr_bgcolor(this);"></td>
+      <td align="left"><a href='co_url.php?nid={dede:field.nid /}' title='查看已经采集的内容'>[{dede:field.nid /}]{dede:field.notename /}</a></td>
+      <td>[<a href='co_edit.php?nid={dede:field.nid /}'>编辑</a>]
+        <!--[<a href='../download/caiji.php?nid={dede:field.nid /}' target="_blank" title="注意：非自动的也会采集！">采集</a>]-->
+        [<a href='co_do.php?dopost=clear&nid={dede:field.nid /}'>清空</a>] [<a href='co_do.php?dopost=auto&nid={dede:field.nid /}' title="注意：设置后碰到错误时将停止本规则的采集，需要手动处理后才能继续采集！">半自动</a>] [<a href='co_do.php?dopost=noeor&nid={dede:field.nid /}' title="注意：设置后碰到错误都将自动跳过并继续采集，可能会出现漏章！">全自动</a>] [<a href='co_do.php?dopost=noco&nid={dede:field.nid /}' title="注意：取消自动采集！">手动</a>]
+        <!--[<a href='co_do.php?dopost=changerenid&nid={dede:field.nid /}' title="改变完本或连载状态！">变更状态</a>] [<a href='co_hebing.php?nid={dede:field.nid /}'>合并</a>] [<a href='co_do.php?dopost=setcgn&nid={dede:field.nid /}' title="从其他网站采集本规则内的小说">换站</a>]--></td>
+      <td>{dede:field.typeid function='typeye(@me)'/}</td>
+      <td>{dede:field.typename function='type(@me)'/}</td>
+      <td>{dede:field.cotime function='GetDatePage(@me)' /}</td>
+      <td>{dede:field.uptime function='date("Y-m-d H:i:s",@me)' /}</td>
+      <td>{dede:field.sourcelang /}</td>
+      <td>{dede:field.nid function='TjUrlNum(@me)' /}</td>
+      <td>{dede:field.remark /}</td>
+    </tr>
+    {/dede:datalist}
+  </form>
+  <tr bgcolor="#FAFAF1">
+    <td height="24" colspan="10"><table width="90%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td><input type="button" name="b11" value="反选" class="coolbg np" style="width:40px" onClick="ReSel();" />
+            &nbsp; <a href="#" onClick="location='co_add.php?action=select';" class='coolbg np'>增加新节点</a> <a href="javascript:GetRule();" class='coolbg np'>导入配置</a> <a href="javascript:ExportRule('');" class='coolbg np'>导出配置</a> | <a href="javascript:GatherSel('');" class='coolbg np' style='color:red; font-weight:bold' title="采集所选规则或者全部规则，“已取消采集”的不会采集">》》开始采集《《</a> <a href="javascript:setauto('');" class='coolbg np' title="将所选规则设置为半自动采集模式">设置为半自动</a> <a href="javascript:setnoeor('');" class='coolbg np' style='color:blue' title="将所选规则设置为全自动采集模式">设置为全自动</a> <a href="javascript:setnoco('');" class='coolbg np' style='color:blue' title="取消所选规则的自动采集">设置为手动</a>
+            <!--<a href="javascript:setcgn('');" class='coolbg np' style='color:blue' title="从其他网站采集所选规则内的小说">换站</a>-->
+            | <a href="javascript:EditNote('');" class='coolbg np'>更改</a> <a href="javascript:EditNoteText('');" class='coolbg np'>更改配置</a> <a href="javascript:TestRule('');" class='coolbg np'>测试</a> | <!--<a href="javascript:ViewDown('');" class='coolbg np'>查看已下载</a> |--> <a href="javascript:CopyNote('');" class='coolbg np'>复制</a> <a href="javascript:ClearNote('');" class='coolbg np'>清空</a> | <a href="javascript:DelNote('');" class='coolbg np'>删除</a></td>
+        </tr>
+      </table></td>
+  </tr>
+  <tr bgcolor="#FAFAF1">
+    <td height="24" colspan="10" align="center"> {dede:pagelist size='5' /} </td>
+  </tr>
+</table>
+</body>
+</html>

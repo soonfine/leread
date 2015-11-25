@@ -1,0 +1,89 @@
+<!--footer开始-->
+
+<div class="footer_sbyou_net">
+  <div class="layout">
+    <div class="clr"></div>
+    <div class="foot-list"> {dede:php}
+      $dsql->SetQuery("select * from dede_flink where ischeck=1 and typeid=1 order by sortrank asc limit 20");
+      $dsql->Execute();
+      while($sou_row=$dsql->GetObject())
+      {
+      echo ' <a href="'.$sou_row->url.'" title="'.$sou_row->webname.'" target="_blank">'.$sou_row->webname.'</a><span>|</span> ';
+      }
+      {/dede:php}
+      {dede:global.cfg_webname/}每天最快更新！ </div>
+    <!-- // foot-nav End -->
+    <div class="copyright" style="margin-top:-5px;"> {dede:php}echo sbyou_net_sysconfig('cfg_powerby');{/dede:php}
+      <p>{dede:php}echo sbyou_net_sysconfig('novel_powerby');{/dede:php} </p>
+    </div>
+    <!-- // copyright End -->
+  </div>
+</div>
+<div class="floatBox">
+  <ul class="fbox">
+    {dede:php}
+    if($arctype_row['topid']){
+    echo '
+    <li class="fli rand">
+      <div class="randBOX" id="randBOX">
+        <div class="h">
+          <h2>精品小说 随机推荐</h2>
+        </div>
+        <div class="bw_box" style="padding-top:76px;padding-bottom:75px">请您稍等，<br />
+          正在努力为您加载数据……</div>
+        <div class="btn"> <img src="'.$cfg_indexurl.'templets/'.$cfg_df_style.'/images/loading_data.gif" id="btn_img" class="btn_img" />
+          <input type="button" value="试试手气" onclick="ajax_data(\'randBOX\',\'\',\'1\')">
+          <script type="text/javascript">ajax_data("randBOX","","1");</script>
+        </div>
+      </div>
+      <a class="fbtn" title="随机推荐">随机推荐</a> </li>
+    <li class="fli sj"><a href="'.$cfg_indexurl.'member/mystow.php" class="fbtn" title="打开书架" target="_blank">打开书架</a></li>
+    <li class="fli sq"><a href="'.$cfg_indexurl.'plus/stow.php?aid='.$id.'&entry=book" class="fbtn" title="收藏本书" target="_blank">收藏本书</a></li>
+    <li class="fli ml"><a href="'.$cfg_indexurl.ltrim($arctype_row['typedir'],'/').'/chapter.html" class="fbtn" title="进入目录">进入目录</a></li>
+    ';
+    }
+    {/dede:php}
+    <li class="fli udLI"><a class="fbtn UD">返回顶部</a></li>
+  </ul>
+</div>
+<div class="TIP"></div>
+<div class="MAK"></div>
+<!--footer结束-->
+<div style="display:none;">
+  <script type="text/javascript">
+  $("img.lazy").show().lazyload({placeholder:"{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading.gif",loading:true,threshold:200,failure_limit:10,skip_invisible:false,effect:"fadeIn"});
+  $(".tab .head a").hover(function(){
+	  $(this).siblings().removeClass("active");
+	  $(this).addClass("active");
+	  $(".tab .box").hide();
+	  var showBOX=$(this).attr("showBOX");
+	  $("."+showBOX).show();
+  });
+  $(".t_btn a").hover(function(){
+	  $(".t_btn a").removeClass("active");
+	  $(this).addClass("active");
+	  var ul_class=$(this).attr("name");
+	  $(".r_box.djb ul").css("display","none");
+	  $(".r_box.djb ul"+"."+ul_class).css("display","block");
+  });
+  //返回顶部
+  $(".UD").click(function(){
+	  $("html,body").animate({scrollTop:0});
+  });
+  $(".fli").hover(function(){
+	  $(this).addClass("on");
+  },function(){
+	  $(this).removeClass("on");
+  });
+	//生成静态
+	ajax_make_html('{dede:php}$sbyou_net=="ph"?$sbyou_net="375":"";$sbyou_net=="over"?$sbyou_net="376":"";echo SBYOU_NET_catalog($tid.$sbyou_net,"typedir");{/dede:php}','{dede:php}echo $sbyou_net_id;{/dede:php}','{dede:php}echo $pages;{/dede:php}','{dede:php}echo $page;{/dede:php}','{dede:php}echo time();{/dede:php}');
+  </script>
+</div>
+<!--ad-->
+
+<div id="loginData" style="display:none;">
+  <script>document.write("<script src='{dede:php}echo $cfg_indexurl;{/dede:php}sb.login.php?entry=book&t="+(new Date).getTime()+"'></s"+"cript>")</script>
+</div>
+<script type="text/javascript">$id('loginInfo')?$id('loginInfo').innerHTML=$id('loginData').innerHTML:'';</script>
+
+</body></html>

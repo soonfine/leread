@@ -1,0 +1,25 @@
+<?PHP global $I_URL,$DATA_URL,$MOBILE_URL,$FIRST_URL,$SEARCH_URL;$pic=$_GET['pic']; ?>
+
+
+
+
+
+{c$sdf [tclass=archives/] [limits=10000/] [chsource=2/] [chids=1/] [orderby=createdate_asc/] [startno=0/] [closed=-1/] [abover=-1/] [wherestr=a.thumb IS NOT NULL/]}
+
+
+{u$thumb [tclass=image/][tname=thumb/][maxwidth=49/][maxheight=66/][thumb=1/][emptyurl=userfiles/empty/]}<img src="<?=$DATA_URL;?>{url_s}" />{/u$thumb}
+
+
+
+{/c$sdf}
+
+
+
+
+
+
+
+
+
+
+

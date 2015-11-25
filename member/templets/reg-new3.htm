@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $cfg_soft_lang; ?>"/>
+<meta http-equiv="refresh" content="10;url=index.php">
+<title><?php echo $cfg_webname; ?>- 注册成功</title>
+<link href="templets/style/log.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<!-- Wrap Begin -->
+<div class="article-newslist">
+  <div id="mod-login" class="login-wrapper reg">
+    <center>
+      <p> 注册成功!<?php echo $uname=empty($uname)? '' : '您的用户名：<font color="#ff6600">'.$uname.'</font>，';?>您已成为本站的正式会员! </p>
+      <p> <font color="#ff6600"><span id="loadtime" style=" font-weight:bold">10</span></font>秒钟后自动转到会员中心！ </p>
+      <p> <a href="<?=$BOOK_URL;?>member/">马上进入会员中心</a>&nbsp;&nbsp;<a href="<?=$BOOK_URL;?>">返回网站首页</a> </p>
+    </center>
+  </div>
+</div>
+<!-- Wrap End --> 
+
+<script type="text/javascript">
+var time = 100;
+function returnUrlByTime() {
+   window.setTimeout('returnUrlByTime()', 1000);
+   time = time - 1;
+   document.getElementById("loadtime").innerHTML = time;
+}
+</script>
+</body>
+</html>

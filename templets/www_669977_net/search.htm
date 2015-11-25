@@ -1,0 +1,28 @@
+<ul class="ul_b_list">
+  {p$search [tclass=searchs/][limits=10/][alimits=25/][length=10/]}
+  {c$single [tclass=archive/][album=0/][chdata=1/]}
+  <li>
+    <div class="pic"><a href="{dede:global.cfg_indexurl/}{arcurl}" title="{subject}" target="_blank">{u$thumb [tclass=image/][tname=thumb/][maxwidth=84/][maxheight=112/][thumb=1/][emptyurl=userfiles/empty/]}<img src="<?=$DATA_URL;?>{url_s}" alt="{$v[subject]}" />{/u$thumb}</a></div>
+    <div class="words">
+      <h2><a href="{dede:global.cfg_indexurl/}{arcurl}" title="{subject}" target="_blank">{subject}</a></h2>
+      <p><a href="{dede:global.cfg_indexurl/}{arcurl}" title="{subject}" target="_blank">{if ({content})}{u$abstract [tclass=odeal/][tname=content/][dealhtml=clearhtml/][trim=255/][nl2br=0/]}{/u$abstract}{else}抱歉，暂时没有内容，稍候为您收集！{/if}</a></p>
+    </div>
+    <div class="info">
+      <div class="name"><span>作者：</span>{author}</div>
+      <div class="time"><span>收录于：</span>{u$time [tclass=date/][tname=updatedate/][date=Y-m-d/][time=H:i/]}{/u$time}</div>
+      <div class="opt"> <a href="{dede:global.cfg_indexurl/}{arcurl}" class="zc" title="阅读本书" target="_blank">阅读本书</a><em>/</em><a href="{dede:global.cfg_indexurl/}{arcurl1}" class="fd" title="作品目录" target="_blank">作品目录</a><em>/</em><a href="javascript:ajax_favorite('{aid}','1');" class="hf" title="加入书架">加入书架</a> </div>
+    </div>
+  </li>
+  <script type="text/javascript" src="{dede:global.cfg_indexurl/}setSDATA.php?aid={aid}"></script>
+  {/c$single}
+  {/p$search}
+</ul>
+<div class="bot_more">
+  <div class="page_info">每页显示&nbsp;<b>10</b>&nbsp;条，共<b>&nbsp;{mpacount}&nbsp;</b>条</div>
+  <div class="page_num">
+    <div><img src="http://i.sbyou.net/img/loading_data.gif" id="cIMG"></div>
+    <div><a class="info">第<b>{mppage}</b>页/共{mpcount}页</a><a href="{mpstart}" title="第一页">|&lt;</a><a href="{mppre}" title="上一页">&lt;&lt;</a></div>
+    {mpnav}
+    <div><a href="{mpnext}" title="下一页">&gt;&gt;</a><a href="{mpend}" title="最后一页">&gt;|</a></div>
+  </div>
+</div>

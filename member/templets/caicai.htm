@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $cfg_soft_lang; ?>" />
+<title>踩客——原来文章还能踩的！ - 会员中心 -<?php echo $cfg_webname; ?></title>
+<link href="templets/style/caicai.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="templets/js/j.js"></script>
+<script type="text/javascript" src="templets/js/load.js"></script>
+<script type="text/javascript" src="templets/js/leftmenu.js"></script>
+<script type="text/javascript">
+  
+  $(document).ready(function(){
+	$("div[class*='good'],div[class*='bad']").bind("click", function(){
+		var type = $(this).attr('class'),aid = $(this).attr('id');
+		var saveId = getCookie('diggid');
+		if(saveId != null)
+		{
+			var saveIds = saveId.split(',');
+			var hasId = false;
+			j = 1;saveId = '';
+			for(i=saveIds.length-1;i>=0;i--)
+			{
+				if(saveIds[i]==aid && hasId) continue;
+				else
+				{
+					if(saveIds[i]==aid && !hasId) hasId = true;
+					saveId += (saveId=='' ? saveIds[i] : ','+saveIds[i]);
+					j++;
+					if(j==20 && hasId) break;
+					if(j==19 && !hasId) break;
+				}
+			}
+			
+			if(hasId) { alert("您已经顶过该帖，请不要重复顶帖 ！"); return false; }
+			else saveId += ','+aid;
+			setCookie('diggid',saveId,1);
+		}
+		else
+		{
+			setCookie('diggid',aid,1);
+		}		
+		$.ajax({type: 'POST',url: "../plus/feedback.php",
+			data: "formurl=caicai&action="+type+"&aid="+aid,
+			dataType: 'text',
+			success: function(result){$("#"+type+aid).html(result);}
+		});
+		
+	});
+});
+
+//读写cookie函数
+function getCookie(c_name)
+{
+	if (document.cookie.length > 0)
+	{
+		c_start = document.cookie.indexOf(c_name + "=")
+		if (c_start != -1)
+		{
+			c_start = c_start + c_name.length + 1;
+			c_end   = document.cookie.indexOf(";",c_start);
+			if (c_end == -1)
+			{
+				c_end = document.cookie.length;
+			}
+			return unescape(document.cookie.substring(c_start,c_end));
+		}
+	}
+	return null
+}
+
+function setCookie(c_name,value,expiredays)
+{
+	var exdate = new Date();
+	exdate.setDate(exdate.getDate() + expiredays);
+	document.cookie = c_name + "=" +escape(value) + ((expiredays == null) ? "" : ";expires=" + exdate.toGMTString()); //使设置的有效时间正确。增加toGMTString()
+}
+
+function postBadGood(type,id){}
+</script>
+</head>
+<body>
+<div id="main">
+  <?php include(DEDEMEMBER."/templets/head.htm"); ?>
+  <div id="content" class="w960 clearfix">
+    <div id="listbox">
+      <ul>
+        <?=$sByou_NET_list;?>
+      </ul>
+      <div class="pageList bot_more">
+        <?=$pageNav;?>
+      </div>
+    </div>
+    <!--左侧内容 -->
+    <div id="sidebar">
+      <div class="s_border">
+        <div class="s_title">最新的完结小说 &raquo;</div>
+        <ul>
+          <?php
+          $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 and overdate!='' order by id desc limit 12");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+            $SByou_Net.='
+            <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'-'.$sbyou_net_row->zuozhe.'作品" target="_blank">'.$sbyou_net_row->typename.'</a>&nbsp;<font style="color:green;">['.$sbyou_net_row->booksize.'字]</font><span>'.$sbyou_net_row->zuozhe.'</span></li>
+            ';
+          }
+          echo $SByou_Net;
+          $SByou_Net='';
+          ?>
+        </ul>
+      </div>
+      <!--最爱好评的文章 -->
+      <div class="s_border mt10">
+        <div class="s_title">被推荐最多的小说 &raquo;</div>
+        <ul>
+          <?php
+          $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by tuijian desc limit 12");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+            $SByou_Net.='
+            <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'-'.$sbyou_net_row->zuozhe.'作品" target="_blank">'.$sbyou_net_row->typename.'</a>&nbsp;<font style="color:green;">['.$sbyou_net_row->booksize.'字]</font><span>'.$sbyou_net_row->zuozhe.'</span></li>
+            ';
+          }
+          echo $SByou_Net;
+          $SByou_Net='';
+          ?>
+        </ul>
+      </div>
+      <div class="s_border mt10">
+        <div class="s_title">被点击最多的小说 &raquo;</div>
+        <ul>
+          <?php
+          $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by bookclick desc limit 12");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+            $SByou_Net.='
+            <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'-'.$sbyou_net_row->zuozhe.'作品" target="_blank">'.$sbyou_net_row->typename.'</a>&nbsp;<font style="color:green;">['.$sbyou_net_row->booksize.'字]</font><span>'.$sbyou_net_row->bookclick.'</span></li>
+            ';
+          }
+          echo $SByou_Net;
+          $SByou_Net='';
+          ?>
+        </ul>
+      </div>
+      <!--最爱好评的文章 -->
+      <div class="s_member mt10">
+        <div class="s_title">最活跃的会员 &raquo;</div>
+        <ul>
+          {dede:memberlist row='15'}
+          <li><a href='<?=$BOOK_URL.'member/index.php?uid='.$cfg_ml->M_LoginID;?>' target='_blank'><img src='<?=rtrim($BOOK_URL,'/');?>{dede:field.face/}' alt="{dede:field.spacename/}"  height="44" width="44" /><br />
+            {dede:field.uname/}</a></li>
+          {/dede:memberlist}
+        </ul>
+      </div>
+      <!--最爱好评的文章 -->
+    </div>
+    <div id="temDiv" style="clear:both"></div>
+    <!--右侧相关 -->
+  </div>
+</div>
+<?php include(DEDEMEMBER."/templets/foot.htm"); ?>
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{dede:include filename="header_inner.tpl.htm"/}
+<!--body开始-->
+<div class="clear"></div>
+<div class="Layout bw">
+  <div class="Head" style="background:none">
+    <h2 style="font-size:14px; line-height:40px; text-indent:15px;">作者“<em style="font-style:normal; color:red">{dede:php}echo $zuozhe;{/dede:php}</em>”的作品</h2>
+    <span>Million words</span> <span class="j"></span> </div>
+  <div class="Con" style="width:998px;">
+    <div class="Left" style=" width:1010px;border-right:none;"> {dede:php}
+      $dsql->SetQuery("select topid,booksize,typename,typeimg,typedir,description from dede_arctype where topid!=0 and topid!=45 and zuozhe='$zuozhe'");
+      $dsql->Execute();
+      while($sbyou_net_row=$dsql->GetObject())
+      {
+      $sbyou_topid=$sbyou_net_row->topid;
+      $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+      
+      $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+      if(!$sbyou_typeimg){
+      $randPICID=rand(1,50);
+      $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+      }
+      echo '
+      <div class="bw_box" style="padding:20px 10px">
+        <div class="t"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->typename.'在线阅读txt下载">'.$sbyou_net_row->typename.'</a><span>（'.$sbyou_net_row->booksize.'字）</span></div>
+        <div class="pic"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->typename.'在线阅读txt下载"><img src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'在线阅读txt下载"/></a></div>
+        <div class="a_l">
+          <div class="a"><span>作者:</span>'.$zuozhe.'</div>
+          <div class="l"><span>类型:</span><a href="'.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" title="'.$ca_typename.'" >'.$ca_typename.'</a></div>
+        </div>
+        <div class="info">
+          <p><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank">'.$sbyou_net_row->description.'</a></p>
+        </div>
+      </div>
+      ';
+      }
+      {/dede:php} </div>
+  </div>
+</div>
+<!--body结束-->
+<div class="clear"></div>
+{dede:include filename="footer_inner.tpl.htm"/}

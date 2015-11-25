@@ -1,0 +1,87 @@
+<?php
+/*-----------------
+独立功能PHP程序
+开发者：枯叶天
+淘宝店铺：669977.taoBaO.com
+演示站：www.SbYOu.net
+官网：www.6 6997 7.net
+QQ：1981 255858
+-----------------*/
+
+$SByou_NET_jump_wap='';
+
+//PC站 演示站 wWw.SbyOu.nEt
+if($entry=='book'){
+  $SByou_NET_jump_wap=SByou_NET_jump_wap($TOUCH_URL,$furl);
+  $sbyou_net_content='
+  <ul>
+    <li class="btn"><span class="w">欢迎，</span><a href="'.$BOOK_URL.'member/" class="name" title="进入会员中心" target="_blank">'.$uname.'</a><em class="ver">|</em></li>
+    <li class="sj"><a href="'.$BOOK_URL.'member/mystow.php" title="打开书架" target="_blank">打开书架</a><em class="ver">|</em></li>
+    <li><a href="'.$MOBILE_URL.'" title="普通版手机站" target="_blank">手机站</a><em class="ver">|</em></li>
+    <li><a href="'.$TOUCH_URL.'" title="触屏版手机站" target="_blank" style="color:#F00; text-decoration:underline">触屏版手机站</a><em class="ver">|</em></li>
+    <li><a href="javascript:logout();" title="安全退出">安全退出</a></li>
+  </ul>
+  <script type="text/javascript">var mid="'.$uid.'";var mname="'.$uname.'";var regdate="'.$utime.'";</script>
+  ';
+}
+
+//搜索站 So.sByOu.neT
+if($entry=='search'){
+  $SByou_NET_jump_wap=SByou_NET_jump_wap($TOUCH_URL.'search.php');
+  $sbyou_net_content='
+  欢迎， <a href="'.$BOOK_URL.'member/" class="name" title="进入会员中心" target="_blank">'.$uname.'</a><span class="hd-tools-sep">|</span><a href="'.$BOOK_URL.'member/mystow.php" title="打开书架" target="_blank">打开书架</a><span class="hd-tools-sep">|</span><a href="'.$MOBILE_URL.'" title="普通版手机站" target="_blank">普通版手机站</a><span class="hd-tools-sep">|</span><a href="'.$TOUCH_URL.'" title="触屏版手机站" target="_blank" style="color:#F00; text-decoration:underline">触屏版手机站</a><span class="hd-tools-sep">|</span><a href="'.$BOOK_URL.'member/index_do.php?fmdo=login&dopost=exit" title="安全退出">安全退出</a>
+  ';
+}
+
+//手机站 普通版 M.sbyOu.neT
+if($entry=='wap'){
+  $sbyou_net_content='
+  欢迎，'.$uname.'，<a href="'.$MOBILE_URL.'adminm.php?action=favorites">打开书架</a>&nbsp;&nbsp;<a href="'.$BOOK_URL.'member/index_do.php?fmdo=login&dopost=exit">安全退出</a>
+  <script type="text/javascript">var mid="'.$uid.'";var mname="'.$uname.'";var regdate="'.$utime.'";</script>
+  ';
+}
+
+//手机站 触屏版 wap.sByOu.NeT
+if($entry=='wap_touch'){
+  $sbyou_net_content='
+  欢迎，'.$uname.'，<a href="'.$TOUCH_URL.'adminm.php?action=favorites">打开书架</a>&nbsp;&nbsp;<a href="'.$BOOK_URL.'member/index_do.php?fmdo=login&dopost=exit">安全退出</a>
+  <script type="text/javascript">var mid="'.$uid.'";var mname="'.$uname.'";var regdate="'.$utime.'";</script>
+  ';
+}
+
+//手机站 触屏版底部 wAp.sByOu.NeT
+if($entry=='wap_touch_bot'){
+  $sbyou_net_content='
+  <a href="'.$TOUCH_URL.'adminm.php?action=favorites">打开书架</a>&nbsp;&nbsp;<a href="'.$BOOK_URL.'login.php?action=logout">安全退出</a>
+  ';
+}
+
+//登陆状态
+if($entry=='permissions'){
+  $sbyou_net_content='
+  <script type="text/javascript">var mid="'.$uid.'";</script>
+  ';
+}
+
+//首页首屏
+if($entry=='index_log'){
+  $sbyou_net_content='
+  <div class="logOk">
+    <div class="picBox left"> <a class="p" href="'.$BOOK_URL.'member/" title="进入会员中心" target="_blank"><img src="'.$face.'"></a> <a class="t" href="'.$BOOK_URL.'member/" title="进入会员中心" target="_blank">'.$uname.'</a> </div>
+    <div class="infoBox right">
+      <p class="dj">等级：'.$sbyou_net_memberRANK.'</p>
+      <p>浏览：'.$sbyou_net_lookTotal.'次</p>
+      <p>点赞：'.$sbyou_net_goodTotal.'次</p>
+      <p>鄙视：'.$sbyou_net_badTotal.'次</p>
+    </div>
+  </div>
+  ';
+}
+
+$sbyou_net_content=$SByou_NET_jump_wap.$sbyou_net_content;
+
+//输出
+js_write($sbyou_net_content);
+
+SByou_NET_cache('data/tplcache');
+?>

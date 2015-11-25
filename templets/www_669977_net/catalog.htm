@@ -1,0 +1,290 @@
+{dede:include filename="header_inner.tpl.htm"/} 
+<!--body开始-->
+<div class="Layout local">当前位置：<a href="{dede:global.cfg_indexurl/}" title="{dede:global.cfg_webname/}">{dede:global.cfg_webname/}</a>&nbsp;&gt;&nbsp;<a href="{dede:global.cfg_indexurl/}{dede:field name='typedir' function='str_replace('/','',@me)'/}.html" title="{dede:field name='typename' function='str_replace("·","",@me)'/}">{dede:field name='typename' function='str_replace("·","",@me)'/}</a></div>
+<div class="Layout no_h">
+  <div class="Con lm_new">
+    <div class="Left">
+      <div class="h_pic_box">
+        <div class="pic" id="h_pic"> {dede:field.typeid runphp='yes'}
+          global $dsql,$cfg_indexurl;
+          $row = $dsql->GetOne("SELECT a.lefttui FROM dede_arctype a WHERE a.id=@me");
+          $query = "SELECT a.id,a.typename,a.typedir,a.zuozhe,a.typeimg,a.description FROM dede_arctype a WHERE a.reid=@me and a.booksize!=0 and a.typeimg!='' order by a.lastupdate desc limit 0,4";
+          $dsql->SetQuery($query);
+          $dsql->Execute();
+          $s1="";
+          $s2='</div>
+        <div class="btn" id="h_btn">';
+          $s3='</div>
+        <div class="info" id="h_info">';
+          $n=0;
+          while($row=$dsql->GetArray()){
+          $sbyou_typeimg=ltrim($row['typeimg'],'/');
+          if(!$sbyou_typeimg){
+          $randPICID=rand(1,50);
+          $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+          }
+          $s1.='
+          <div id="pic'.$n.'" onmouseout="mmplay()" onmouseover="mmstop()"><a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" title="'.$row['typename'].'" target="_blank"><img class="lazy" data-original="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$row['typename'].'" width="210" height="280" /></a><span><a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" title="'.$row['typename'].'-'.$row['zuozhe'].'作品" target="_blank">'.$row['typename'].'</a></span></div>
+          ';
+          $s2.='<a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" title="'.$row['typename'].'-'.$row['zuozhe'].'作品" target="_blank" id="tabpic'.$n.'" onmouseout="showpic('.$n.')" onmouseover="mmstop()"><img class="lazy" data-original="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$row['typename'].'" /></a>';
+          $s3.='
+          <div id="word'.$n.'" onmouseout="mmplay()" onmouseover="mmstop()">'.cn_substr(html2text($row['description']),76).'…<span><a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" target="_blank">[点击阅读]</a></span></div>
+          ';
+          $n++;
+          }
+          @me=$s1.$s2.$s3;
+          {/dede:field.typeid} </div>
+      </div>
+      <script type="text/javascript">
+			document.getElementById("tabpic0").className="active";
+			document.getElementById("pic0").style.display="block";
+			var cateimgs=document.getElementById("h_pic").getElementsByTagName("div");
+				var a=0;
+				var b=cateimgs.length;
+				var time=3000;
+				function showpic(id)
+				{
+			a=id;
+			clearTimeout(mytime);
+			for (i=0;i<b;i++)
+			{
+				document.getElementById("tabpic"+i).className="";
+				document.getElementById("pic"+i).style.display="none";
+				document.getElementById("word"+i).style.display="none";
+			}
+			document.getElementById("tabpic"+id).className="active";
+			document.getElementById("pic"+id).style.display="block";
+			document.getElementById("word"+id).style.display="block";
+			mytime=setTimeout("showpic("+(id==(b-1)? 0:id+1)+")", time);
+      }
+      mytime=setTimeout("showpic(1)", time);
+      function mmstop(){clearTimeout(mytime);}
+      function mmplay(){mytime=setTimeout("showpic("+a+")", time);}
+      </script>
+      <div class="new_box">
+        <div class="u">
+          <div class="head">
+            <h2>{dede:field name='typename' function='str_replace("·","",@me)'/}最新更新</h2>
+            <span class="j"></span> </div>
+          <div class="con"> {dede:field.typeid runphp='yes'}
+            global $dsql,$cfg_indexurl;
+            $row = $dsql->GetOne("SELECT a.typenewbook FROM dede_arctype a WHERE a.id=@me");
+            $typenewbook=trim(str_replace('，',',',$row['typenewbook']));
+            $andsql=($typenewbook=='0' || $typenewbook=='') ? " order by id desc":" and a.id in($typenewbook) order by id desc";
+            
+            $row = $dsql->GetOne("SELECT a.id,a.typename,a.typedir,a.zuozhe,a.description,b.typedir as zuozhedir FROM dede_arctype a left join dede_arctype b on(b.typename=a.zuozhe) WHERE a.reid=@me and a.booksize!=0".$andsql);
+            @me='
+            <h2><a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" title="'.$row['typename'].'" target="_blank">'.$row['typename'].'</a><span> 作者：<a href="'.$cfg_indexurl.'author/?'.$row['id'].'" target="_blank" title="'.$row['zuozhe'].'">'.$row['zuozhe'].'</a></span></h2>
+            <p><a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" title="'.$row['typename'].'" target="_blank">'.$row['description'].'……</a></p>
+            ';
+            {/dede:field.typeid} </div>
+        </div>
+        <div class="d">
+          <div class="head">
+            <h2>精品推荐</h2>
+            <span class="j"></span> </div>
+          <div class="con">
+            <ul>
+              {dede:field.typeid runphp='yes'}
+              global $dsql,$cfg_indexurl;
+              $row = $dsql->GetOne("SELECT a.topnews FROM dede_arctype a WHERE a.id=@me");
+              $topnews=trim(str_replace('，',',',$row['topnews']));
+              $andsql=($topnews=='0' || $topnews=='') ? " order by id desc":" and a.id in($topnews)";
+              $query = "SELECT a.id,a.topid,a.typename,a.typedir,a.zuozhe,b.typedir as zuozhedir FROM dede_arctype a left join dede_arctype b on(b.typename=a.zuozhe) WHERE a.reid=@me and a.booksize!=0".$andsql." limit 0,10";
+              $dsql->SetQuery($query);
+              $dsql->Execute();
+              $s1="";
+              while($row=$dsql->GetArray()){
+              if($row['zuozhe']){
+              $zz_str='<a href="'.$cfg_indexurl.'author/?'.$row[id].'.html" target="_blank" title="'.$row[zuozhe].'"><span>['.$row[zuozhe].']</span></a>';
+              }else{
+              $zz_str=str_replace('·','',SBYOU_NET_catalog($row['topid'],'typename'));
+              $zz_str='<a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" target="_blank" title="'.$zz_str.'作品"><span>['.$zz_str.']</span></a>';
+              }
+              $s1.='
+              <li>·'.$zz_str.'<a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" title="'.$row['typename'].'" target="_blank">'.$row['typename'].'</a></li>
+              ';
+              }
+              @me=$s1;
+              {/dede:field.typeid}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="Right">
+      <div class="r_box tab">
+        <div class="head"> <a class="l active" showBOX="BOX1">强荐榜</a> <a class="r" showBOX="BOX2">排行榜</a> </div>
+        <div class="box BOX1" style="display:block;">
+          <ul>
+            {dede:php}
+            $dsql->SetQuery("select * from dede_arctype where topid=$tid order by tuijian desc limit 5");
+            $dsql->Execute();
+            while($sbyou_net_row=$dsql->GetObject())
+            {
+            $rmwbtj_i++;
+            $sbyou_topid=$sbyou_net_row->topid;
+            $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+            $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+            if(!$sbyou_typeimg){
+            $randPICID=rand(1,50);
+            $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+            }
+            $SByou_Net.='
+            <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'-'.$sbyou_net_row->zuozhe.'作品-'.$sbyou_net_row->booksize.'字" target="_blank">'.$sbyou_net_row->typename.'</a>&nbsp;<font style="color:green;">['.$sbyou_net_row->booksize.'字]</font><span><a href="'.$cfg_indexurl.'author/?'.$sbyou_net_row->id.'" target="_blank" title="'.$sbyou_net_row->zuozhe.'">'.$sbyou_net_row->zuozhe.'</a></span></li>
+            ';          
+            if($rmwbtj_i==1){
+            $SByou_Net.='
+            <li class="first_con">
+              <div class="pic"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank"><img class="lazy" src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'" /></a></div>
+              <div class="a_l">
+                <div class="a"><span>作者:</span><a href="'.$cfg_indexurl.'author/?'.$sbyou_net_row->id.'" target="_blank" title="'.$sbyou_net_row->zuozhe.'">'.$sbyou_net_row->zuozhe.'</a></div>
+                <div class="l"><span>类型:</span><a href="'.$cfg_indexurl.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" title="'.$ca_typename.'">'.$ca_typename.'</a></div>
+              </div>
+              <div class="info">
+                <p><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank">'.$sbyou_net_row->description.'</a></p>
+              </div>
+            </li>
+            ';
+            }
+            }
+            echo $SByou_Net;
+            {/dede:php}
+          </ul>
+        </div>
+        <div class="box BOX2" style="display:none;">
+          <ul>
+            {dede:php}
+            $dsql->SetQuery("select * from dede_arctype where topid=$tid order by bookclick desc limit 5");
+            $dsql->Execute();
+            while($sbyou_net_row=$dsql->GetObject())
+            {
+            $rmwbtj_i++;
+            $sbyou_topid=$sbyou_net_row->topid;
+            $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+            $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+            if(!$sbyou_typeimg){
+            $randPICID=rand(1,50);
+            $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+            }
+            $SByou_Net.='
+            <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'-'.$sbyou_net_row->zuozhe.'作品-'.$sbyou_net_row->booksize.'字" target="_blank">'.$sbyou_net_row->typename.'</a>&nbsp;<font style="color:green;">['.$sbyou_net_row->booksize.'字]</font><span><a href="'.$cfg_indexurl.'author/?'.$sbyou_net_row->id.'" target="_blank" title="'.$sbyou_net_row->zuozhe.'">'.$sbyou_net_row->zuozhe.'</a></span></li>
+            ';          
+            if($rmwbtj_i==1){
+            $SByou_Net.='
+            <li class="first_con">
+              <div class="pic"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank"><img class="lazy" src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'" /></a></div>
+              <div class="a_l">
+                <div class="a"><span>作者:</span><a href="'.$cfg_indexurl.'author/?'.$sbyou_net_row->id.'" target="_blank" title="'.$sbyou_net_row->zuozhe.'">'.$sbyou_net_row->zuozhe.'</a></div>
+                <div class="l"><span>类型:</span><a href="'.$cfg_indexurl.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" title="'.$ca_typename.'">'.$ca_typename.'</a></div>
+              </div>
+              <div class="info">
+                <p><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank">'.$sbyou_net_row->description.'</a></p>
+              </div>
+            </li>
+            ';
+            }
+            }
+            echo $SByou_Net;
+            {/dede:php}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="Layout m_list list">
+  <div class="Head">
+    <h2>更新列表</h2>
+    <span>New List</span> <span class="j"></span>
+    <div class="morelist">
+      <div class="more"><a href="{dede:global.cfg_indexurl/}shuku.html" title="更多更新列表" target="_blank">更多更新列表&nbsp;&gt;&gt;</a></div>
+      <ul>
+        {dede:channel type='top'row='6'}
+        <li><a href='[field:typelink function='str_replace(".html","",@me)'/]/shuku.html' title="[field:typename/]" target="_blank">[field:typename/]</a></li>
+        {/dede:channel}
+      </ul>
+    </div>
+  </div>
+  <div class="Con">
+    <div class="Left">
+      <div class="m_head"> <span class="c">类型</span> <span class="t">书名/章节</span> <span class="w">字数</span> <span class="a">作者</span><span class="z">状态</span> <span class="tm">更新时间</span> </div>
+      <ul class="ul_m_list">
+        {dede:field.typeid runphp='yes'}
+        global $dsql,$cfg_indexurl,$cfg_df_style;
+        $s1="";
+        $query = "SELECT tp.id,tp.typedir,tp.typename,tp.zuozhe,tp.booksize,tp.overdate,tp.lastupdate,zz.typedir as zuozhedir,c.typename as retypename,c.typedir as retypedir FROM `dede_arctype` tp LEFT JOIN `dede_arctype` zz ON zz.typename=tp.zuozhe left join dede_arctype c on(c.id=tp.reid) WHERE tp.reid=@me and tp.booksize!=0 order by lastupdate desc limit 0,50";
+        $dsql->SetQuery($query);
+        $dsql->Execute();
+        while($row=$dsql->GetArray()){
+
+        if($row['zuozhe']){
+        $list_zz='<a style="color:#025b81;" href="'.$cfg_indexurl.'author/?'.$row['id'].'.html" target="_blank" title="'.$row['zuozhe'].'">'.$row['zuozhe'].'</a>';
+        }else{
+        $list_zz='<font style="color:#343434;">未记录</font>';
+        }
+
+        $gxlb_i++;$gxlb_i%2==0?$class=' class="odd"':$class='';
+
+        if($row['lastupdate']+86400>time()){
+        $imgstr=' <img src="'.$cfg_indexurl.'templets/'.$cfg_df_style.'/images/new.gif" />';
+        }else{
+        $imgstr='';
+        }
+
+        $s1.=' <li'.$class.'>
+        <div class="c"><a href="'.$cfg_indexurl.str_replace('/','',$row['retypedir']).'/shuku.html" title="'.str_replace('·','',$row['retypename']).'">['.str_replace('·','',$row['retypename']).']</a></div>
+        <div class="title">
+          <div class="t"><a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/" title="'.$row['typename'].'" target="_blank">'.$row['typename'].'</a></div>
+          <div class="n">';
+            $tid=$row['id'];
+            $over=($row['overdate']=='0' || $row['overdate']=='') ? "连载":"<font color=blue>完结</font>";
+            $row1 = $dsql->GetOne("Select id,title FROM `dede_archives` Where typeid=$tid order by id desc");
+            if($row1)
+            $s1.='<a href="'.$cfg_indexurl.ltrim($row['typedir'],'/').'/'.$row1['id'].'.html" title="'.$row['typename'].'-'.$row1['title'].'" target="_blank">'.$row1['title'].$imgstr.'</a>';
+            $s1.='</div>
+        </div>
+        <div class="words">'.$row['booksize'].'</div>
+        <div class="author">'.$list_zz.'</div>
+        <div class="abover"><span>'.$over.'</span></div>
+        <div class="time">'.date('Y-m-d',$row['lastupdate']).'</div>
+        </li>
+        ';
+        }
+        @me=$s1;
+        {/dede:field.typeid}
+      </ul>
+      <div class="bot_more"><a href="{dede:global.cfg_indexurl/}{dede:field name='typedir' function='str_replace("/","",@me)'/}/shuku.html" title="更多[{dede:field name='typename'/}]小说更新">更多[{dede:field name='typename'/}]小说更新</a></div>
+    </div>
+    <div class="Right">
+      <div class="r_box author"> {dede:php}echo sBYou_net_zzzf($tid);{/dede:php} </div>
+      <div class="r_box author art"> {dede:php}echo sbYou_Net_dbz($tid);{/dede:php} </div>
+      <div class="r_box ad ad200"> 
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=3"></script>
+      </div>
+      <div class="r_box cmztj cn">
+        <div class="head">
+          <h2>成名作推荐</h2>
+        </div>
+        <ul>
+          {dede:php}echo SBYoU_Net_cmztj($tid);{/dede:php}
+        </ul>
+      </div>
+      <div class="r_box rmwbtj cn">
+        <div class="head">
+          <h2>热门完本推荐</h2>
+        </div>
+        <ul>
+          {dede:php}echo SbYoU_Net_rmwbtj($tid);{/dede:php}
+        </ul>
+      </div>
+      <div class="r_box ad ad200"> 
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=4"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<!--body结束-->
+<div class="clear"></div>
+{dede:include filename="footer_inner.tpl.htm"/} 

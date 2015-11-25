@@ -1,0 +1,60 @@
+<!--footer开始-->
+
+<div class="footer_sbyou_net">
+  <div class="layout">
+    <div class="clr"></div>
+    <div class="foot-list"> {dede:php}
+      $dsql->SetQuery("select * from dede_flink where ischeck=1 and typeid=1 order by sortrank asc limit 20");
+      $dsql->Execute();
+      while($sou_row=$dsql->GetObject())
+      {
+      echo ' <a href="'.$sou_row->url.'" title="'.$sou_row->webname.'" target="_blank">'.$sou_row->webname.'</a><span>|</span> ';
+      }
+      {/dede:php}
+      {dede:global.cfg_webname/}每天最快更新！ </div>
+    <!-- // foot-nav End -->
+    <div class="copyright" style="margin-top:-5px;"> {dede:php}echo sbyou_net_sysconfig('cfg_powerby');{/dede:php}
+      <p>{dede:php}echo sbyou_net_sysconfig('novel_powerby');{/dede:php} </p>
+    </div>
+    <!-- // copyright End -->
+  </div>
+</div>
+<div class="floatBox">
+  <ul class="fbox">
+    <li class="fli udLI"><a class="fbtn UD">返回顶部</a></li>
+  </ul>
+</div>
+<div class="TIP"></div>
+<div class="MAK"></div>
+<!--footer结束-->
+<div style="display:none;">
+  <script type='text/javascript'>
+  $("img.lazy").show().lazyload({placeholder:"{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading.gif",loading:true,threshold:200,failure_limit:10,skip_invisible:false,effect:"fadeIn"});
+  $(".n_p_box input").click(function(){
+	  $(".n_p_box input").removeClass("active");
+	  $(this).addClass("active");
+	  $(".con_box .box").toggle();
+	  $(".n_p_box div").toggleClass("n");
+  });
+  //返回顶部
+  $(".UD").click(function(){
+	  $("html,body").animate({scrollTop:0});
+  });
+  $(".fli").hover(function(){
+	  $(this).addClass("on");
+  },function(){
+	  $(this).removeClass("on");
+  });
+	//生成静态
+	ajax_make_html('index','','','','{dede:php}echo time();{/dede:php}');
+  </script>
+</div>
+<!--ad-->
+
+<div id="loginData" style="display:none;">
+  <script>document.write("<script src='{dede:php}echo $cfg_indexurl;{/dede:php}sb.login.php?entry=book&t="+(new Date).getTime()+"'></s"+"cript>")</script>
+</div>
+<script type="text/javascript">$id('loginInfo')?$id('loginInfo').innerHTML=$id('loginData').innerHTML:'';</script>
+<script type="text/javascript" src="http://links.webscan.360.cn/index/index/314912f7e4635f028bdbe4103017c0eb"></script>
+
+</body></html>

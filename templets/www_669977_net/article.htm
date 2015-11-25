@@ -1,0 +1,55 @@
+{dede:include filename="header_article.tpl.htm"/}
+<div class="clear"></div>
+<div class="Layout">
+  <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=12"></script>
+</div>
+<div class="Layout local">当前位置：<a href="{dede:global.cfg_indexurl/}" title="{dede:global.cfg_webname/}">{dede:global.cfg_webname/}</a> > {dede:field.typeid runphp='yes'}
+  global $dsql,$cfg_indexurl;
+  $reid = $dsql->GetOne("SELECT reid FROM dede_arctype where id=@me");
+  $reid = $reid['reid'];
+  $retype = $dsql->GetOne("SELECT typedir,typename FROM dede_arctype where id=$reid");
+  @me="<a href='".$cfg_indexurl.$retype['typedir'].".html'>".str_replace("·","",$retype['typename']);
+  {/dede:field.typeid}</a>&nbsp;&gt;&nbsp;<a href='{dede:global.cfg_indexurl/}{dede:field name='typedir' function='str_replace("/","",@me)'/}/' title="{dede:field name='typename'/}">{dede:field name='typename'/}</a>&nbsp;&gt;&nbsp;{dede:field.title/}</div>
+<div class="clear"></div>
+<!--body开始-->
+<div class="Layout no_bg no_bor">
+  <div class="Con box_con">
+    <h2>{dede:field.title/}</h2>
+    <div class="info"><a href='{dede:global.cfg_indexurl/}{dede:field name='typedir' function='str_replace("/","",@me)'/}/' title="{dede:field name='typename'/}" target="_blank">{dede:field name='typename'/}</a>&nbsp;|&nbsp;作者:<a href="{dede:global.cfg_indexurl/}author/?{dede:field.typeid/}.html" title="{dede:field.zuozhe/}" target="_blank">{dede:field.zuozhe/}</a>&nbsp;|&nbsp;更新时间：{dede:field name='pubdate' function='date("Y-m-d H:i:s",@me)'/}</div>
+    <div class="box_head"></div>
+    <div class="box_box">
+      <script type="text/javascript">if(getcookie('cgSize')!=""){var cgSize=getcookie('cgSize');$(".box_box").css('font-size',cgSize);}</script>
+      {dede:php}
+      $addonarticle_row=$dsql->GetOne("select body from dede_addonarticle where aid=$aid limit 1");
+      $sbyou_net_body=$addonarticle_row['body'];
+      if(strlen($sbyou_net_body)=='46' || strlen($sbyou_net_body)=='35' || strlen($sbyou_net_body)=='48'){
+      include_once DEDEINC.'/../dynamic/htmltxt/'.$sbyou_net_body.'.php';
+      $encode=mb_detect_encoding($caccnt,array('ASCII','GB2312','GBK','UTF-8'));
+      if($encode=='UTF-8'){
+      $caccnt=iconv('UTF-8','GB2312//IGNORE',$caccnt);
+      }
+      echo $caccnt;
+      }else{
+      if(strpos($sbyou_net_body,'fhhk')){
+      echo sbyou_NET_qidian($sbyou_net_body);
+      }else{
+      echo $sbyou_net_body;
+      }
+      }
+      {/dede:php}
+      <script type="text/javascript">if(getcookie('cgSize')!=""){var cgSize=getcookie('cgSize');$(".box_box p").css('font-size',cgSize);}</script>
+    </div>
+    <div class="box_head bot"></div>
+    <div class="btn_box">
+      <div class="u"> <span class="pre"><b>（快捷键：&larr;）&nbsp;</b><a href="{dede:prenext get='pre'/}" id="keyleft" title="上一章">上一章</a></span> <span class="bookhome"><a id="keyenter" href="{dede:global.cfg_indexurl/}{dede:field name='typedir' function='str_replace("/","",@me)'/}/chapter.html" title="回目录">回目录</a></span> <span class="next"><a href="{dede:prenext get='next'/}" id="keyright" title="下一章">下一章</a><b>&nbsp;（快捷键：&rarr;）</b></span> </div>
+      <div class="d"> <a href="{dede:global.cfg_indexurl/}" title="返回首页">返回首页</a>&nbsp;&brvbar;&nbsp;<a href="{dede:global.cfg_indexurl/}{dede:field name='typedir' function='str_replace("/","",@me)'/}/chapter.html" title="返回目录">返回目录</a>&nbsp;&brvbar;&nbsp;<a href="{dede:global.cfg_indexurl/}{dede:field name='typedir' function='str_replace("/","",@me)'/}/" title="返回书页">返回书页</a>&nbsp;&brvbar;&nbsp;<a href="{dede:php}echo $cfg_indexurl;{/dede:php}member/mystow.php" title="打开书架" target="_blank">打开书架</a>&nbsp;&brvbar;&nbsp;<a href="{dede:php}echo $cfg_indexurl;{/dede:php}plus/stow.php?aid={dede:php}echo $aid.'&entry=chapter';{/dede:php}" title="加入书签" target="_blank">加入书签</a> </div>
+    </div>
+  </div>
+</div>
+<!--body结束-->
+<div class="clear"></div>
+<div class="Layout">
+  <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=13"></script>
+</div>
+{dede:include filename="footer_article.tpl.htm"/}
+<script>sbyou_NeT_ArticleInfo('{dede:php}echo SBYOU_NET_archive_chapter($aid,"typeid");{/dede:php}',mid,mname,regdate,'{dede:php}echo $aid;{/dede:php}');</script>

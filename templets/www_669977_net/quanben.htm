@@ -1,0 +1,55 @@
+{dede:include filename="header_inner.tpl.htm"/}
+<div class="clear"></div>
+<!--body开始-->
+<div class="Layout local">
+  <?='当前位置：<a href="'.$cfg_indexurl.'">'.sbyou_net_sysconfig('cfg_webname').'</a>&nbsp;&gt;&nbsp;<a href="'.$cfg_indexurl.SBYOU_NET_catalog('376','typedir').'.html">'.SBYOU_NET_catalog('376','typename').'</a>';?>
+</div>
+<div class="clear"></div>
+<div class="Layout m_list list">
+<div class="Head">
+  <h2>{c$nav [tclass=nownav/]}{othertitle}{/c$nav}更新列表</h2>
+  <span>New List</span> <span class="j"></span>
+  <div class="morelist">
+    <div class="more">每页显示<b>&nbsp;52&nbsp;</b>部小说</div>
+  </div>
+</div>
+<div class="Con">
+  <div class="Left">
+    <div class="m_head"> <span class="c">类型</span> <span class="t">书名/章节</span> <span class="w">字数</span> <span class="a">作者</span><span class="z">状态</span> <span class="tm">更新时间</span> </div>
+    <ul class="ul_m_list">
+      <?=$list_str;?>
+    </ul>
+    <div class="bot_more">
+      <?=$pageNav;?>
+    </div>
+  </div>
+  <div class="Right">
+    <div class="r_box author"> {dede:php}echo sBYou_net_zzzf();{/dede:php} </div>
+    <div class="r_box author art"> {dede:php}echo sbYou_Net_dbz();{/dede:php} </div>
+    <div class="r_box ad ad200">
+      <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=3"></script>
+    </div>
+    <div class="r_box cmztj cn">
+      <div class="head">
+        <h2>成名作推荐</h2>
+      </div>
+      <ul>
+        {dede:php}echo SBYoU_Net_cmztj();{/dede:php}
+      </ul>
+    </div>
+    <div class="r_box rmwbtj cn">
+      <div class="head">
+        <h2>热门完本推荐</h2>
+      </div>
+      <ul>
+        {dede:php}echo SbYoU_Net_rmwbtj();{/dede:php}
+      </ul>
+    </div>
+    <div class="r_box ad ad200">
+      <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=4"></script>
+    </div>
+  </div>
+</div>
+<!--body结束-->
+<div class="clear"></div>
+{dede:include filename="footer_inner.tpl.htm"/}

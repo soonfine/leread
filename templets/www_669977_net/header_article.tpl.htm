@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+<title>{dede:php}
+$article_row=$dsql->GetOne("select * from dede_archives where id=$aid limit 1");
+$article_title=SBYOU_NET_catalog($article_row[typeid],'typename').'最新章节_'.$article_row['title'].'_'.$cfg_webname;
+$chapter_typename=$arctype_row['typename'];
+$chapter_zuozhe=$arctype_row[zuozhe];
+$chapter_title=$chapter_typename.'最新章节_'.$chapter_typename.'无弹窗_'.$chapter_zuozhe.'新书作品'.'_'.$cfg_webname;
+if($aid){
+	//内容页
+	echo $article_title;
+}else{
+	//目录页
+	echo $chapter_title;
+}
+$chapter_keywords=$chapter_typename.','.$chapter_typename.'小说,'.$chapter_typename.$chapter_zuozhe.','.$chapter_typename.'无弹窗,'.$chapter_typename.'txt,'.$chapter_typename.'txt下载,'.$chapter_typename.'在线阅读';
+$chapter_description=$chapter_zuozhe.'的新书'.$chapter_typename.'最新章节已经更新，新书在线提供'.$chapter_zuozhe.'的小说作品'.$chapter_typename.'无弹窗阅读和'.$chapter_typename.'txt下载全集电子书免费下载。'.$chapter_typename.'免费在线阅读尽在'.$cfg_webname.'！';
+{/dede:php}</title>
+<meta name="keywords" content="{dede:php}echo $chapter_keywords;{/dede:php}{dede:field.title/},{dede:field name='typename'/},{dede:field name='typename'/}全文免费阅读,{dede:field name='typename'/}无弹窗" />
+<meta name="description" content="{dede:php}echo $chapter_description;{/dede:php}{dede:field name='typename'/}_{dede:field.title/}_无弹窗全文免费在线阅读_txt电子书下载，{dede:field.description function='html2text(@me)'/}" />
+<meta name="author" content="{dede:global.cfg_webname/}">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+     var hm = document.createElement("script");
+     hm.src = "//hm.baidu.com/hm.js?b960ef3e591954822680295a9db70198";
+     var s = document.getElementsByTagName("script")[0]; 
+     s.parentNode.insertBefore(hm, s);
+     })();
+</script>
+
+<script type="text/javascript">var BOOK_URL="{dede:global.cfg_basehost/}{dede:global.cfg_indexurl/}";</script>
+<link rel="stylesheet" type="text/css" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/css/basic.css" />
+<link rel="stylesheet" type="text/css" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/css/body_article.css" />
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/jquery-1.9.0.min.js"></script>
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/jquery.lazyload.min.js"></script>
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/common.js"></script>
+<script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/xmlJS.js"></script>
+</head>
+<body class="body{dede:php}echo $tid.$sbyou_net.sbyou_net_catalog($typeid,'topid');{/dede:php} article {dede:php}if($aid){echo 'article2';}else{echo 'article1';}{/dede:php}">
+<script type="text/javascript">if(getcookie('cgColor')!=""){var cgColor=getcookie('cgColor');$("body").css('background-color',cgColor);}</script>
+<!--<script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=15"></script>-->
+<!--<script type="text/javascript" src="http://ad.669977.net/?entry=tan&js=1&o=1"></script>-->
+<!--header开始-->
+<div class="Layout active topFLOAT">
+  <div class="topline"></div>
+  <div class="topbtn">
+    <div class="open" onclick="setcookie('topbar_control',1)">打开</div>
+    <div class="close" onclick="setcookie('topbar_control',0)">关闭</div>
+  </div>
+  <div class="topbar">
+    <script type="text/javascript">if(getcookie("topbar_control")=="0"){$(".topbar").hide();$(".topFLOAT").removeClass("active");}</script>
+    <div class="mainbox">
+      <div class="left_con" id="loginInfo">
+        <ul>
+          <li><img style="position:relative;top:1px;" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading_data.gif" />&nbsp;登陆信息加载中...</li>
+        </ul>
+      </div>
+      <div class="right_con">
+        <ul>
+          <li><a href="{dede:global.cfg_indexurl/}" title="返回首页">返回首页</a></li>
+          {dede:php}
+          global $dsql,$cfg_indexurl;
+          $s="";
+          $query = "SELECT * FROM dede_arctype WHERE reid=0 and id<>45 order by sortrank";
+          $dsql->SetQuery($query);
+          $dsql->Execute();
+          while($row=$dsql->GetArray()){
+          if($row['id']!=375 & $row['id']!=376){
+          $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+          ($reidrow[reid]==$row['id'] || $row['id']==sbyou_net_catalog($typeid,'topid') || $row['id']==$sbyou_net)?$ph_class=' class="cur"':$ph_class='';
+          $s.='
+          <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+          ';
+          }
+          if($row['id']==375){
+          $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+          $reidrow[reid]==$row['id']?$ph_class=' class="cur"':$ph_class='';
+          $ph='
+          <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace('小说','',str_replace("·","",$row['typename'])).'</a></li>
+          ';
+          }
+          if($row['id']==376){
+          $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+          $reidrow[reid]==$row['id']?$ph_class=' class="cur"':$ph_class='';
+          $sk='
+          <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+          ';
+          }
+          }
+          $sbyou_net=='quanben'?$sk_class=' class="cur"':$sk_class='';
+          $qb='
+          <li><em class="ver">|</em><a href="'.$cfg_indexurl.'quanben.html"'.$sk_class.' title="全本小说">全本小说</a></li>
+          ';
+          echo $s.$ph.$sk.$qb;
+          {/dede:php}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="topblank"></div>
+<script type="text/javascript">if(getcookie("topbar_control")=="0"){$(".topblank").hide();}</script>
+<!--header结束-->

@@ -1,0 +1,585 @@
+{dede:include filename="header_index.tpl.htm"/}
+<!--body开始-->
+<div class="Layout">
+  <div class="left fyb">
+    <div class="head">
+      <h2>风云榜</h2>
+    </div>
+    <div class="con">
+      <ul class="list">
+        {dede:php}
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by bookclick desc limit 0,15");
+        $dsql->Execute();
+        while($sbyou_net_row=$dsql->GetObject())
+        {
+        $sbyou_topid=$sbyou_net_row->topid;
+        $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+        echo '
+        <li>
+          <div class="div_c">[<a href="'.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" class="c" title="'.str_replace("·","",$ca_typename).'" >'.str_replace("·","",$ca_typename).'</a>]</div>
+          <div class="div_t"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" class="t" title="'.$sbyou_net_row->typename.'" target="_blank">'.$sbyou_net_row->typename.'</a><span>('.$sbyou_net_row->bookclick.')</span></div>
+        </li>
+        ';
+        }
+        {/dede:php}
+      </ul>
+    </div>
+    <div class="bot"></div>
+  </div>
+  <div class="right zxgx">
+    <div class="head">
+      <h2>最新更新</h2>
+      <span>NEWBOOK</span> </div>
+    <div class="con">
+      <div class="u"> {dede:php}
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by lastupdate desc limit 2");
+        $dsql->Execute();
+        while($sbyou_net_row=$dsql->GetObject())
+        {
+        $sbyou_topid=$sbyou_net_row->topid;
+        $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+        $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+        if(!$sbyou_typeimg){
+        $randPICID=rand(1,50);
+        $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+        }
+        echo '
+        <div class="u-box">
+          <div class="pic"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank"><img class="lazy" src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'" /></a></div>
+          <div class="title">
+            <h2><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank">'.sbyou_nEt_cut_str($sbyou_net_row->typename,'8','0','gb2312').'</a></h2>
+            <p>作者：<a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->zuozhe.'作品">'.$sbyou_net_row->zuozhe.'</a><br />
+              类型：<a href="'.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" title="'.$ca_typename.'" >'.$ca_typename.'</a></p>
+          </div>
+          <div class="info">
+            <p><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank">简介：'.sbyou_nEt_cut_str($sbyou_net_row->description,'58','0','gb2312').'</a></p>
+            <div class="btn"><a class="yd" href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="立即阅读：'.$sbyou_net_row->typename.'" target="_blank">[点击阅读]</a>&nbsp;<a class="xz" href="'.$TXT_URL.'?topid='.$sbyou_net_row->topid.'&id='.$sbyou_net_row->id.'&date='.$sbyou_net_row->lastupdate.'" title="立即下载：'.$sbyou_net_row->typename.'" target="_blank">[点击下载]</a></div>
+          </div>
+        </div>
+        ';
+        }
+        {/dede:php} </div>
+      <div class="d">
+        <div class="n_p_box">
+          <div></div>
+          <input type="button" title="上一页" value="上一页" class="active" />
+          <input type="button" title="下一页" value="下一页" />
+        </div>
+        <div class="con_box"> {dede:php}
+          for($n_p_box_i=1;$n_p_box_i<=6;$n_p_box_i++){
+          $ca_topid=$n_p_box_i.$n_p_box_i;
+          $ca_typename=SBYOU_NET_catalog($ca_topid,'typename');
+          $ca_typedir=SBYOU_NET_catalog($ca_topid,'typedir');
+          $h2_str='
+          <h2><a href="'.$cfg_indexurl.$ca_typedir.'.html" class="'.$ca_typedir.'" title="'.str_replace('·','',$ca_typename).'">'.str_replace('·','',$ca_typename).'</a></h2>
+          ';
+          $dsql->SetQuery("select * from dede_arctype where topid=$ca_topid and booksize!=0 order by id desc limit 5");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+          $sbyou_topid=$sbyou_net_row->topid;
+          $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+          if($sbyou_net_row->zuozhe){
+          $zz_str=$sbyou_net_row->zuozhe;
+          }else{
+          $zz_str=str_replace('·','',$ca_typename);
+          }
+          $sbyou_net_list.='
+          <li>·<span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->zuozhe.'" target="_blank">['.$zz_str.']</a></span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank">'.$sbyou_net_row->typename.'</a></li>
+          ';
+          }
+          $sbyou_net_str='
+          <div class="lm_li">'.$h2_str.'
+            <ul>
+              '.$sbyou_net_list.'
+            </ul>
+          </div>
+          ';
+          if($ca_topid==11){
+          $sbyou_net_str='
+          <div class="box">'.$sbyou_net_str;
+            }
+            if($ca_topid==33){
+            $sbyou_net_str=$sbyou_net_str.'</div>
+          <div class="box" style="display:none">';
+            }
+            if($ca_topid==66){
+            $sbyou_net_str=$sbyou_net_str.'</div>
+          ';
+          }
+          echo $sbyou_net_str;
+          $sbyou_net_str='';
+		  $sbyou_net_list='';
+          }
+          {/dede:php} </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="Layout bw">
+  <div class="Head">
+    <h2>百万字精品推荐榜</h2>
+    <span>Million words</span> <span class="j"></span>
+    <div class="morelist">
+      <div class="more"><a href="{dede:global.cfg_indexurl/}shuku.html" title="更多百万精品" target="_blank">更多百万精品&nbsp;&gt;&gt;</a></div>
+    </div>
+  </div>
+  <div class="Con">
+    <div class="Left"> {dede:php}
+      $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize>=1000000 order by bookclick desc limit 9");
+      $dsql->Execute();
+      while($sbyou_net_row=$dsql->GetObject())
+      {
+      $sbyou_topid=$sbyou_net_row->topid;
+      $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+      
+      $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+      if(!$sbyou_typeimg){
+      $randPICID=rand(1,50);
+      $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+      }
+      echo '
+      <div class="bw_box">
+        <div class="t"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->typename.'在线阅读txt下载">'.$sbyou_net_row->typename.'</a><span>（'.$sbyou_net_row->booksize.'字）</span></div>
+        <div class="pic"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->typename.'在线阅读txt下载"><img src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'在线阅读txt下载"/></a></div>
+        <div class="a_l">
+          <div class="a"><span>作者:</span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->zuozhe.'" >'.$sbyou_net_row->zuozhe.'</a></div>
+          <div class="l"><span>类型:</span><a href="'.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" title="'.$ca_typename.'" >'.$ca_typename.'</a></div>
+        </div>
+        <div class="info">
+          <p><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank">'.$sbyou_net_row->description.'</a></p>
+        </div>
+      </div>
+      ';
+      }
+      {/dede:php} </div>
+    <div class="Right">
+      <div class="r_box qldzb">
+        <div class="head">
+          <h2>潜力大作榜</h2>
+        </div>
+        <ul>
+          {dede:php}
+          $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by bookclick desc limit 10,12");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+          $qldzb_i++;
+          $sbyou_topid=$sbyou_net_row->topid;
+          $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+          $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+          if(!$sbyou_typeimg){
+          $randPICID=rand(1,50);
+          $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+          }
+          $sbyou_net_list.='
+          <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'-'.$sbyou_net_row->zuozhe.'作品" target="_blank">'.$sbyou_net_row->typename.'</a>&nbsp;<font style="color:green;">['.$sbyou_net_row->booksize.'字]</font><span>'.$sbyou_net_row->bookclick.'</span></li>
+          ';          
+          if($qldzb_i==1){
+          $sbyou_net_list.='
+          <li class="first_con">
+            <div class="pic"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank"><img class="lazy" src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'" /></a></div>
+            <div class="a_l">
+              <div class="a"><span>作者:</span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->zuozhe.'作品">'.$sbyou_net_row->zuozhe.'</a></div>
+              <div class="l"><span>类型:</span><a href="'.$cfg_indexurl.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" title="'.$ca_typename.'" >'.$ca_typename.'</a></div>
+            </div>
+            <div class="info">
+              <p><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank">'.$sbyou_net_row->description.'</a></p>
+            </div>
+          </li>
+          ';
+          }          
+          }
+          echo $sbyou_net_list;
+          $sbyou_net_list='';
+          {/dede:php}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="Layout jp">
+  <div class="Head">
+    <h2>精品推荐</h2>
+    <span>Boutique Recommend</span> <span class="j"></span>
+    <div class="morelist">
+      <div class="more"><a href="{dede:global.cfg_indexurl/}shuku.html" title="更多精品小说" target="_blank">更多精品小说&nbsp;&gt;&gt;</a></div>
+      <ul>
+        {dede:channel type='top'row='6'}
+        <li><a href='[field:typelink/]' title="[field:typename/]" target="_blank">[field:typename/]</a></li>
+        {/dede:channel}
+      </ul>
+    </div>
+  </div>
+  <div class="Con jp">
+    <div class="Left">
+      <div class="l_con">
+        <div class="pic">
+          <ul>
+            {dede:php}
+            $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by lastclick desc limit 0,6");
+            $dsql->Execute();
+            while($sbyou_net_row=$dsql->GetObject())
+            {
+            $sbyou_topid=$sbyou_net_row->topid;
+            $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');            
+            $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+            if(!$sbyou_typeimg){
+            $randPICID=rand(1,50);
+            $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+            }
+            echo '
+            <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" class="p" title="类型：'.str_replace("·","",$ca_typename).'，作者：'.$sbyou_net_row->zuozhe.'，总点击：'.$sbyou_net_row->booksize.'" target="_blank"> <img class="lazy" src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'" /> </a><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" class="t" title="类型：'.$ca_typename.'，作者：'.$sbyou_net_row->zuozhe.'，总点击：'.$sbyou_net_row->booksize.'" target="_blank">'.$sbyou_net_row->typename.'</a></li>
+            ';
+            }
+            {/dede:php}
+          </ul>
+        </div>
+        <div class="lm"> {dede:php}
+          for($lm01_i=1;$lm01_i<=3;$lm01_i++){
+          $ca_topid=$lm01_i.$lm01_i;
+          $ca_typename=SBYOU_NET_catalog($ca_topid,'typename');
+          $ca_typedir=SBYOU_NET_catalog($ca_topid,'typedir');
+          $h2_str='
+          <h2><a href="'.$cfg_indexurl.$ca_typedir.'.html" class="'.$ca_typedir.'" title="'.str_replace('·','',$ca_typename).'">'.str_replace('·','',$ca_typename).'</a></h2>
+          ';
+          $dsql->SetQuery("select * from dede_arctype where topid=$ca_topid and booksize!=0 order by lastclick desc limit 0,5");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+          $sbyou_topid=$sbyou_net_row->topid;
+          $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+          if($sbyou_net_row->zuozhe){
+          $zz_str=$sbyou_net_row->zuozhe;
+          }else{
+          $zz_str=str_replace('·','',$ca_typename);
+          }
+          $sbyou_net_list.='
+          <li>·<span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->zuozhe.'" target="_blank">['.$zz_str.']</a></span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank">'.$sbyou_net_row->typename.'</a></li>
+          ';
+          }
+          $sbyou_net_str='
+          <div class="lm_li">'.$h2_str.'
+            <ul>
+              '.$sbyou_net_list.'
+            </ul>
+          </div>
+          ';
+          echo $sbyou_net_str;
+          $sbyou_net_str='';
+		  $sbyou_net_list='';
+          }
+          {/dede:php} </div>
+      </div>
+      <div class="l_con">
+        <div class="pic">
+          <ul>
+            {dede:php}
+            $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by lastclick desc limit 6,6");
+            $dsql->Execute();
+            while($sbyou_net_row=$dsql->GetObject())
+            {
+            $sbyou_topid=$sbyou_net_row->topid;
+            $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+            $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+            if(!$sbyou_typeimg){
+            $randPICID=rand(1,50);
+            $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+            }
+            echo '
+            <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" class="p" title="类型：'.str_replace("·","",$ca_typename).'，作者：'.$sbyou_net_row->zuozhe.'，总点击：'.$sbyou_net_row->booksize.'" target="_blank"> <img class="lazy" src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'" /> </a><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" class="t" title="类型：'.$ca_typename.'，作者：'.$sbyou_net_row->zuozhe.'，总点击：'.$sbyou_net_row->booksize.'" target="_blank">'.$sbyou_net_row->typename.'</a></li>
+            ';
+            }
+            {/dede:php}
+          </ul>
+        </div>
+        <div class="lm"> {dede:php}
+          for($lm02_i=4;$lm02_i<=6;$lm02_i++){
+          $ca_topid=$lm02_i.$lm02_i;
+          $ca_typename=SBYOU_NET_catalog($ca_topid,'typename');
+          $ca_typedir=SBYOU_NET_catalog($ca_topid,'typedir');
+          $h2_str='
+          <h2><a href="'.$cfg_indexurl.$ca_typedir.'.html" class="'.$ca_typedir.'" title="'.str_replace('·','',$ca_typename).'">'.str_replace('·','',$ca_typename).'</a></h2>
+          ';
+          $dsql->SetQuery("select * from dede_arctype where topid=$ca_topid and booksize!=0 order by lastclick desc limit 0,5");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+          $sbyou_topid=$sbyou_net_row->topid;
+          $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+          if($sbyou_net_row->zuozhe){
+          $zz_str=$sbyou_net_row->zuozhe;
+          }else{
+          $zz_str=str_replace('·','',$ca_typename);
+          }
+          $sbyou_net_list.='
+          <li>·<span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->zuozhe.'" target="_blank">['.$zz_str.']</a></span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank">'.$sbyou_net_row->typename.'</a></li>
+          ';
+          }
+          $sbyou_net_str='
+          <div class="lm_li">'.$h2_str.'
+            <ul>
+              '.$sbyou_net_list.'
+            </ul>
+          </div>
+          ';
+          echo $sbyou_net_str;
+          $sbyou_net_str='';
+		  $sbyou_net_list='';
+          }
+          {/dede:php} </div>
+      </div>
+    </div>
+    <div class="Right">
+      <div class="r_box yddj">
+        <div class="head">
+          <h2>月度点击榜</h2>
+        </div>
+        <ul>
+          {dede:php}
+          $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by bookclickm desc limit 0,5");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+          $yddjb_i++;
+          $sbyou_topid=$sbyou_net_row->topid;
+          $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+          $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+          if(!$sbyou_typeimg){
+          $randPICID=rand(1,50);
+          $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+          }
+          $sbyou_net_list.='
+          <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'-'.$sbyou_net_row->zuozhe.'作品" target="_blank">'.$sbyou_net_row->typename.'</a>&nbsp;<font style="color:green;">['.$sbyou_net_row->booksize.'字]</font><span>'.$sbyou_net_row->bookclickm.'</span></li>
+          ';          
+          if($yddjb_i==1){
+          $sbyou_net_list.='
+          <li class="first_con">
+            <div class="pic"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank"><img class="lazy" src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'" /></a></div>
+            <div class="a_l">
+              <div class="a"><span>作者:</span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->zuozhe.'作品">'.$sbyou_net_row->zuozhe.'</a></div>
+              <div class="l"><span>类型:</span><a href="'.$cfg_indexurl.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" title="'.$ca_typename.'" >'.$ca_typename.'</a></div>
+            </div>
+            <div class="info">
+              <p><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank">'.$sbyou_net_row->description.'</a></p>
+            </div>
+          </li>
+          ';
+          }          
+          }
+          echo $sbyou_net_list;
+          $sbyou_net_list='';
+          {/dede:php}
+        </ul>
+      </div>
+      <div class="r_box ydhp">
+        <div class="head">
+          <h2>月度评论榜</h2>
+        </div>
+        <ul>
+          {dede:php}
+          $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by tuijian desc limit 15,5");
+          $dsql->Execute();
+          while($sbyou_net_row=$dsql->GetObject())
+          {
+          $ydplb_i++;
+          $sbyou_topid=$sbyou_net_row->topid;
+          $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+          $sbyou_typeimg=ltrim($sbyou_net_row->typeimg,'/');
+          if(!$sbyou_typeimg){
+          $randPICID=rand(1,50);
+          $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+          }
+          $sbyou_net_list.='
+          <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'-'.$sbyou_net_row->zuozhe.'作品" target="_blank">'.$sbyou_net_row->typename.'</a>&nbsp;<font style="color:green;">['.$sbyou_net_row->booksize.'字]</font><span>'.$sbyou_net_row->tuijian.'</span></li>
+          ';          
+          if($ydplb_i==1){
+          $sbyou_net_list.='
+          <li class="first_con">
+            <div class="pic"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank"><img class="lazy" src="'.$cfg_indexurl.$sbyou_typeimg.'" alt="'.$sbyou_net_row->typename.'" /></a></div>
+            <div class="a_l">
+              <div class="a"><span>作者:</span><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank" title="'.$sbyou_net_row->zuozhe.'作品">'.$sbyou_net_row->zuozhe.'</a></div>
+              <div class="l"><span>类型:</span><a href="'.$cfg_indexurl.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" target="_blank" title="'.$ca_typename.'" >'.$ca_typename.'</a></div>
+            </div>
+            <div class="info">
+              <p><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" target="_blank">'.$sbyou_net_row->description.'</a></p>
+            </div>
+          </li>
+          ';
+          }          
+          }
+          echo $sbyou_net_list;
+          $sbyou_net_list='';
+          {/dede:php}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="Layout ph">
+  <div class="Head">
+    <h2>排行榜</h2>
+    <span>Ranking</span> <span class="j"></span>
+    <div class="morelist">
+      <div class="more"><a href="{dede:global.cfg_indexurl/}paihangbang.html" title="更多排行榜" target="_blank">更多排行榜&nbsp;&gt;&gt;</a></div>
+      <ul>
+        {dede:channel type='top'row='6'}
+        <li><a href='[field:typelink/]' title="[field:typename/]" target="_blank">[field:typename/]</a></li>
+        {/dede:channel}
+      </ul>
+    </div>
+  </div>
+  <div class="Con ph">
+    <div class="p_box dj">
+      <div class="head">
+        <h2><a href="{dede:global.cfg_indexurl/}paihangbang.html" title="点击榜" target="_blank">点击榜</a></h2>
+      </div>
+      <div class="ul_h"> <span class="p">排序</span> <span class="s">书名<em>&nbsp;/&nbsp;</em>字数</span> <span class="d">点击数</span> </div>
+      <ul>
+        {dede:php}
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by bookclick desc limit 0,15");
+        $dsql->Execute();
+        while($sbyou_net_row=$dsql->GetObject())
+        {
+        $sbyou_topid=$sbyou_net_row->topid;
+        $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+        echo '
+        <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" class="t" title="'.$sbyou_net_row->typename.'作者：'.$sbyou_net_row->zuozhe.'" target="_blank">'.$sbyou_net_row->typename.'</a><em>&nbsp;/&nbsp;['.$sbyou_net_row->booksize.'字]</em><span>'.$sbyou_net_row->bookclick.'</span></li>
+        ';
+        }
+        {/dede:php}
+      </ul>
+    </div>
+    <div class="p_box hp">
+      <div class="head">
+        <h2><a href="{dede:global.cfg_indexurl/}paihangbang.html" title="好评榜" target="_blank">好评榜</a></h2>
+      </div>
+      <div class="ul_h"> <span class="p">排序</span> <span class="s">书名<em>&nbsp;/&nbsp;</em>字数</span> <span class="d">好评数</span> </div>
+      <ul>
+        {dede:php}
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by tuijian desc limit 0,15");
+        $dsql->Execute();
+        while($sbyou_net_row=$dsql->GetObject())
+        {
+        $sbyou_topid=$sbyou_net_row->topid;
+        $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+        echo '
+        <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" class="t" title="'.$sbyou_net_row->typename.'作者：'.$sbyou_net_row->zuozhe.'" target="_blank">'.$sbyou_net_row->typename.'</a><em>&nbsp;/&nbsp;['.$sbyou_net_row->booksize.'字]</em><span>'.$sbyou_net_row->tuijian.'</span></li>
+        ';
+        }
+        {/dede:php}
+      </ul>
+    </div>
+    <div class="p_box pl">
+      <div class="head">
+        <h2><a href="{dede:global.cfg_indexurl/}paihangbang.html" title="收藏榜" target="_blank">收藏榜</a></h2>
+      </div>
+      <div class="ul_h"> <span class="p">排序</span> <span class="s">书名<em>&nbsp;/&nbsp;</em>字数</span> <span class="d">收藏数</span> </div>
+      <ul>
+        {dede:php}
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by bookclick desc limit 10,15");
+        $dsql->Execute();
+        while($sbyou_net_row=$dsql->GetObject())
+        {
+        $sbyou_topid=$sbyou_net_row->topid;
+        $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+        echo '
+        <li><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" class="t" title="'.$sbyou_net_row->typename.'作者：'.$sbyou_net_row->zuozhe.'" target="_blank">'.$sbyou_net_row->typename.'</a><em>&nbsp;/&nbsp;['.$sbyou_net_row->booksize.'字]</em><span>'.$sbyou_net_row->bookclick.'</span></li>
+        ';
+        }
+        {/dede:php}
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="Layout m_list">
+  <div class="Head">
+    <h2>更新列表</h2>
+    <span>New List</span> <span class="j"></span>
+    <div class="morelist">
+      <div class="more"><a href="{dede:global.cfg_indexurl/}shuku.html" title="更多更新列表" target="_blank">更多更新列表&nbsp;&gt;&gt;</a></div>
+      <ul>
+        {dede:channel type='top'row='6'}
+        <li><a href='[field:typelink function='str_replace(".html","",@me)'/]/shuku.html' title="[field:typename/]" target="_blank">[field:typename/]</a></li>
+        {/dede:channel}
+      </ul>
+    </div>
+  </div>
+  <div class="Con">
+    <div class="Left">
+      <div class="m_head"> <span class="c">类型</span> <span class="t">书名/章节</span> <span class="w">字数</span> <span class="a">作者</span><span class="z">状态</span> <span class="tm">更新时间</span> </div>
+      <ul class="ul_m_list">
+        {dede:php}
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by id desc limit 0,52");
+        $dsql->Execute();
+        while($sbyou_net_row=$dsql->GetObject())
+        {
+        $sbyou_topid=$sbyou_net_row->topid;
+        $ca_typename=SBYOU_NET_catalog($sbyou_topid,'typename');
+        
+        if(!$sbyou_net_row->overdate){
+        $over='连载';
+        }else{
+        $over='<font color=blue>完结</font>';
+        }
+        
+        if($sbyou_net_row->zuozhe){
+        $list_zz=$sbyou_net_row->zuozhe;
+        }else{
+        $list_zz='<font style="color:#343434;">未记录</font>';
+        }
+        
+        $gxlb_i++;$gxlb_i%2==0?$class=' class="odd"':$class='';
+        
+        echo ' <li'.$class.'>
+        <div class="c"><a href="'.SBYOU_NET_catalog($sbyou_topid,'typedir').'.html" title="'.str_replace("·","",$ca_typename).'">['.str_replace("·","",$ca_typename).']</a></div>
+        <div class="title">
+          <div class="t"><a href="'.$cfg_indexurl.ltrim($sbyou_net_row->typedir,'/').'/" title="'.$sbyou_net_row->typename.'" target="_blank">'.$sbyou_net_row->typename.'</a></div>
+          <div class="n">'.SbYOU_Net_NEW($sbyou_net_row->id,ltrim($sbyou_net_row->typedir,'/')).'</div>
+        </div>
+        <div class="words">'.$sbyou_net_row->booksize.'</div>
+        <div class="author">'.$list_zz.'</div>
+        <div class="abover"><span>'.$over.'</span></div>
+        <div class="time">'.date('Y-m-d',$sbyou_net_row->lastupdate).'</div>
+        </li>
+        ';
+        }
+        {/dede:php}
+      </ul>
+      <div class="bot_more"><a href="{dede:php} echo $cfg_indexurl.'shuku.html';{/dede:php}" title="更多小说更新">更多小说更新</a></div>
+    </div>
+    <div class="Right">
+      <div class="r_box author"> {dede:php}echo sBYou_net_zzzf();{/dede:php} </div>
+      <div class="r_box author art"> {dede:php}echo sbYou_Net_dbz();{/dede:php} </div>
+      <div class="r_box ad ad200">
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=3"></script>
+      </div>
+      <div class="r_box cmztj cn">
+        <div class="head">
+          <h2>成名作推荐</h2>
+        </div>
+        <ul>
+          {dede:php}echo SBYoU_Net_cmztj();{/dede:php}
+        </ul>
+      </div>
+      <div class="r_box rmwbtj cn">
+        <div class="head">
+          <h2>热门完本推荐</h2>
+        </div>
+        <ul>
+          {dede:php}echo SbYoU_Net_rmwbtj();{/dede:php}
+        </ul>
+      </div>
+      <div class="r_box ad ad200">
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=4"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<!--body结束-->
+<div class="clear"></div>
+{dede:include filename="footer_index.tpl.htm"/}

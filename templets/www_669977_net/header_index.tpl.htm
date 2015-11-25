@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+        <title>{dede:global.cfg_indexname/}</title>
+        <meta name="keywords" content="{dede:global.cfg_keywords/}" />
+        <meta name="description" content="{dede:global.cfg_description/}" />
+        <meta http-equiv="mobile-agent" content="format=xhtml; url={dede:php}echo $TOUCH_URL;{/dede:php}" />
+        <meta name="author" content="{dede:global.cfg_webname/}">
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <base href="{dede:global.cfg_basehost/}{dede:global.cfg_indexurl/}" />
+        <script type="text/javascript">var BOOK_URL="{dede:global.cfg_basehost/}{dede:global.cfg_indexurl/}";</script>
+        <script>
+            var _hmt = _hmt || [];
+            (function() {
+             var hm = document.createElement("script");
+             hm.src = "//hm.baidu.com/hm.js?b960ef3e591954822680295a9db70198";
+             var s = document.getElementsByTagName("script")[0]; 
+             s.parentNode.insertBefore(hm, s);
+             })();
+        </script>
+        <link rel="stylesheet" type="text/css" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/css/basic.css" />
+        <link rel="stylesheet" type="text/css" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/css/body_index.css" />
+        <link rel="icon" href="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/favicon.ico" type="image/x-icon" />
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/jquery-1.9.0.min.js"></script>
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/jquery.lazyload.min.js"></script>
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/common.js"></script>
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/js/xmlJS.js"></script>
+    </head>
+    <body class="body">
+        <div style="visibility:hidden;float:left;">
+        <h1>启明中文网</h1>
+        </div>
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=15"></script>
+        <!--<script type="text/javascript" src="http://ad.669977.net/?entry=tan&js=1&o=1"></script>-->
+        <!--header开始-->
+        <div class="Layout topbox">
+            <div class="topbar">
+                <div class="mainbox">
+                    <table><tr>
+                    <td width="380px"><div class="left_con" id="loginInfo">
+                        <ul>
+                            <li><img style="position:relative;top:1px;" src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading_data.gif" />&nbsp;登陆信息加载中...</li>
+                        </ul>
+                    </div></td>
+                    <td><div>
+                            <script type="text/javascript">(function(){document.write(unescape('%3Cdiv id="bdcs"%3E%3C/div%3E'));var bdcs = document.createElement('script');bdcs.type = 'text/javascript';bdcs.async = true;bdcs.src = 'http://znsv.baidu.com/customer_search/api/js?sid=16339597657006466298' + '&plate_url=' + encodeURIComponent(window.location.href) + '&t=' + Math.ceil(new Date()/3600000);var s = document.getElementsByTagName('script')[0];s.parentNode.insertBefore(bdcs, s);})();</script>
+                    </div></td>
+                    <td><div class="right_con">
+                        <ul class="UL">
+                            <li>本站所有小说，均为<font class="red">&nbsp;50万字&nbsp;</font>以上！</li>
+                            <li><em class="ver">|</em><a href="javascript:" title="加入收藏夹" onclick="addBookmark()">加入收藏夹</a></li>
+                        </ul>
+                        <ul class="fUL">
+                            <li><a href="{dede:global.cfg_indexurl/}" title="返回首页">返回首页</a></li>
+                            {dede:php}
+                            global $dsql,$cfg_indexurl;
+                            $s="";
+                            $query = "SELECT * FROM dede_arctype WHERE reid=0 and id<>45 order by sortrank";
+                            $dsql->SetQuery($query);
+                            $dsql->Execute();
+                            while($row=$dsql->GetArray()){
+                            if($row['id']!=375 & $row['id']!=376){
+                            if($row['id']==$tid)
+                            $s.='
+                            <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html" title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+                            ';
+                            else{
+                            $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+                            $reidrow[reid]==$row['id']?$ph_class=' class="cur"':$ph_class='';
+                            $s.='
+                            <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+                            ';
+                            }
+                            }
+                            if($row['id']==375){
+                            $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+                            $reidrow[reid]==$row['id']?$ph_class=' class="cur"':$ph_class='';
+                            $ph='
+                            <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+                            ';
+                            }
+                            if($row['id']==376){
+                            $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+                            $reidrow[reid]==$row['id']?$ph_class=' class="cur"':$ph_class='';
+                            $sk='
+                            <li><em class="ver">|</em><a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.str_replace("·","",$row['typename']).'">'.str_replace("·","",$row['typename']).'</a></li>
+                            ';
+                            }
+                            }
+                            $sbyou_net=='quanben'?$sk_class=' class="cur"':$sk_class='';
+                            $qb='
+                            <li><em class="ver">|</em><a href="'.$cfg_indexurl.'quanben.html"'.$sk_class.' title="全本小说">全本小说</a></li>
+                            ';
+                            echo $s.$ph.$sk.$qb;
+                            {/dede:php}
+                        </ul>
+                    </div></td>
+                </tr></table>
+                </div>
+            </div>
+        </div>
+        <div class="Layout h">
+            <div class="header">
+                <div class="top">
+                    <div class="logo">
+                        <a href="{dede:global.cfg_indexurl/}" title="{dede:global.cfg_webname/}"><img src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/logo.png" alt="{dede:global.cfg_webname/}" /></a>
+                    </div>
+                    <div class="c_con">
+                        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=2"></script>
+                    </div>
+                    <div class="s_box">
+                        <div class="s_entry"><a href="{dede:php}echo $SEARCH_URL;{/dede:php}?fuck=author" title="作者" target="_blank">作者</a><a href="{dede:php}echo $SEARCH_URL;{/dede:php}top/" title="专题" target="_blank">专题</a><a href="{dede:global.cfg_indexurl/}paihang.html" title="排行" target="_blank">排行</a></div>
+                        <form name="searchform" id="searchform" method="get" target="_blank" action="{dede:php}echo $SEARCH_URL;{/dede:php}">
+                            <input name="searchword" id="searchword" type="text" maxlength="18" value="请输入您要搜索的内容" onfocus="if(this.value=='请输入您要搜索的内容'){this.value=''}" onblur="if(this.value==''){this.value='请输入您要搜索的内容'}" onclick="this.select()" />
+                            <input type="submit" value="搜索" id="s_btn" />
+                        </form>
+                        <div class="hotword">
+                            <h3>热门搜索：</h3>
+                            {dede:php} echo SByou_net_search_keywords();{/dede:php} </div>
+                    </div>
+                </div>
+                <div class="nav">
+                    <div class="box"> <a href="{dede:global.cfg_indexurl/}" class="home" title="首页">首页</a> {dede:php}
+                        global $dsql,$cfg_indexurl;
+                        $s="";
+                        $query = "SELECT * FROM dede_arctype WHERE reid=0 and id<>45 order by sortrank";
+                        $dsql->SetQuery($query);
+                        $dsql->Execute();
+                        while($row=$dsql->GetArray()){
+                        if($row['id']!=375 & $row['id']!=376){
+                        if($row['id']==$tid)
+                        $s.='<a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html" title="'.$row['typename'].'">'.$row['typename'].'</a>';
+                        else{
+                        $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+                        $reidrow[reid]==$row['id']?$ph_class=' class="cur"':$ph_class='';
+                        $s.='<a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.$row['typename'].'">'.$row['typename'].'</a>';
+                        }
+                        }
+                        if($row['id']==375){
+                        $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+                        $reidrow[reid]==$row['id']?$ph_class=' class="cur"':$ph_class='';
+                        $ph='<a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.$row['typename'].'">['.$row['typename'].']</a>';
+                        }
+                        if($row['id']==376){
+                        $reidrow = $dsql->GetOne("SELECT reid FROM dede_arctype where id=$tid");
+                        $reidrow[reid]==$row['id']?$ph_class=' class="cur"':$ph_class='';
+                        $sk='<a href="'.$cfg_indexurl.str_replace('/','',$row['typedir']).'.html"'.$ph_class.' title="'.$row['typename'].'">['.$row['typename'].']</a>';
+                        }
+                        }
+                        $qb='<a href="'.$cfg_indexurl.'quanben.html" title="全本小说">[全本小说]</a>';
+                        echo $s.$ph.$sk.$qb;
+                        {/dede:php} </div>
+                </div>
+            </div>
+        </div>
+        <!--header结束-->
+        <div class="clear"></div>

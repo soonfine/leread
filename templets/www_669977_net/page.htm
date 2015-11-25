@@ -1,0 +1,359 @@
+{dede:include filename="header_inner.tpl.htm"/}
+<!--body开始-->
+<div class="Layout local">
+  <?='当前位置：<a href="'.$cfg_indexurl.'">'.sbyou_net_sysconfig('cfg_webname').'</a>&nbsp;&gt;&nbsp;<a href="'.$cfg_indexurl.$catalog_typedir.'.html">'.str_replace('·','',$catalog).'</a>&nbsp;&gt;&nbsp;<a href="'.$cfg_indexurl.str_replace('/','',$arctype_row['typedir']).'/">'.$arctype_row['typename'].'</a>';?>
+</div>
+<div class="clear"></div>
+<div class="Layout no_h">
+  <div class="Con jj">
+    <div class="Left">
+      <div class="p_box">
+        <?php
+        $sbyou_typeimg=ltrim($arctype_row[typeimg],'/');
+        if(!$sbyou_typeimg){
+          $randPICID=rand(1,50);
+          $sbyou_typeimg="uploads/empty/".$randPICID.".jpg";
+        }
+        ?>
+        <div class="pic"><a href="<?=$cfg_indexurl.ltrim($arctype_row['typedir'],'/').'/chapter.html'?>" title="<?=$arctype_row['typename'];?>"><img class="lazy" src="<?=$cfg_indexurl.$sbyou_typeimg;?>" alt="<?=$arctype_row['typename'];?>" /></a></div>
+        <div class="rmxx_box">
+          <h2>热门小说</h2>
+          <div class="a_box HOT_BOX">
+            <?=$remen_list;?>
+          </div>
+        </div>
+      </div>
+      <div class="j_box">
+        <div class="title">
+          <h2>
+            <?='<a href="'.$cfg_indexurl.ltrim($arctype_row['typedir'],'/').'/chapter.html" title="'.$arctype_row['typename'].'">'.$arctype_row['typename'].'</a>';?>
+          </h2>
+        </div>
+        <div class="info">
+          <ul>
+            <li><span>作者：</span>
+              <?='<a href="'.$cfg_indexurl.'author/?'.$arctype_row['id'].'.html" target="_blank" title="'.$arctype_row['zuozhe'].'">'.$arctype_row['zuozhe'].'</a>';?>
+            </li>
+            <li class="lb"><span>类别：</span>
+              <?='<a href="'.$cfg_indexurl.$catalog_typedir.'.html" title="'.$arctype_row['typename'].'">'.$catalog.'</a>';?>
+            </li>
+            <li><span>总点击：</span><font id="cms_clicks">
+              <?=$arctype_row['bookclick'];?>
+              </font></li>
+            <li><span>月点击：</span><font id="cms_mclicks">
+              <?=$arctype_row['bookclickm'];?>
+              </font></li>
+            <li class="zdj"><span>周点击：</span><font id="cms_wclicks">
+              <?=$arctype_row['bookclickw'];?>
+              </font></li>
+            <li><span>总字数：</span><font id="cms_ready_1">
+              <?=$arctype_row['booksize'];?>
+              </font></li>
+            <li><span>发布时间：</span><font id="cms_favorites">
+              <?=date('Y-m-d',$arctype_row['lastupdate']);?>
+              </font></li>
+            <li class="wj"><span>状态：</span>
+              <?=$arctype_row['overdate']==0?连载中:'已完本';?>
+            </li>
+          </ul>
+          <div class="praisesBTN"><a href="javascript:ajax_praise('{dede:field.id /}');" title="给予推荐！"><font id="cms_praises">{dede:field.tuijian /}</font> 推荐！</a></div>
+        </div>
+        <div class="words">
+          <p> <a href="<?=$cfg_indexurl.ltrim($arctype_row['typedir'],'/').'/chapter.html'?>">
+            <?=$arctype_row['description'];?>
+            </a> </p>
+        </div>
+        <div class="read_btn">
+          <div class="btn" style="width:328px"> <a href="<?=$cfg_indexurl.ltrim($arctype_row['typedir'],'/').'/chapter.html'?>" class="yd" title="点击阅读" style="margin-right:2px">点击阅读</a> <a href="<?=$cfg_indexurl;?>plus/stow.php?aid=<?=$id;?>&entry=book" class="sc" title="加入收藏夹" style="margin-right:2px" target="_blank">加入收藏夹</a> <a href="<?=$TXT_URL.'?txt-'.$arctype_row['topid'].'-'.$arctype_row['id'].'-'.$arctype_row['lastupdate'].'.html';?>" class="txt" title="<?=$arctype_row['typename'];?>txt下载" target="_blank">
+            <?=$arctype_row['typename'];?>
+            txt下载</a></div>
+          <div class="box_fx" style="width:196px"> <span>分享到:</span> <a class="jiathis_button_tsina xl">新浪</a> <a class="jiathis_button_tqq tx">腾讯</a> <a class="jiathis_button_qzone qq">QQ空间</a></div>
+        </div>
+        <div class="vote">
+          <div class="li"> <a class="kx" onClick="ajax_data('score','<?=$id;?>','1');sbyou_NET_addGood('<?=$id;?>',mid,mname,regdate);"></a> <span><a onClick="ajax_data('score','<?=$id;?>','1');sbyou_NET_addGood('<?=$id;?>',mid,mname,regdate);">推荐</a></span> <span class="num"><font id="sbyou_score_1">
+            <?=$arctype_row['score_1'];?>
+            </font></span> </div>
+          <div class="li"> <a class="bs" onClick="ajax_data('score','<?=$id;?>','3');sbyou_NET_addBad('<?=$id;?>',mid,mname,regdate);"></a> <span><a onClick="ajax_data('score','<?=$id;?>','3');sbyou_NET_addBad('<?=$id;?>',mid,mname,regdate);">鄙视</a></span> <span class="num"><font id="sbyou_score_3">
+            <?=$arctype_row['score_3'];?>
+            </font></span> </div>
+          <div class="li"> <a class="nh" onClick="ajax_data('score','<?=$id;?>','2')"></a> <span><a onClick="ajax_data('score','<?=$id;?>','2')">怒火</a></span> <span class="num"><font id="sbyou_score_2">
+            <?=$arctype_row['score_2'];?>
+            </font></span> </div>
+          <div class="li"> <a class="kd" onClick="ajax_data('score','<?=$id;?>','4')"></a> <span><a onClick="ajax_data('score','<?=$id;?>','4')">坑爹</a></span> <span class="num"><font id="sbyou_score_4">
+            <?=$arctype_row['score_4'];?>
+            </font></span> </div>
+          <div class="li"> <a class="djy" onClick="ajax_data('score','<?=$id;?>','5')"></a> <span><a onClick="ajax_data('score','<?=$id;?>','5')">打酱油</a></span> <span class="num"><font id="sbyou_score_5">
+            <?=$arctype_row['score_5'];?>
+            </font></span> </div>
+        </div>
+        <div class="wei_infobox">
+          <ul id="ul_infobox">
+            <?=$weiInfo_list;?>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="Right">
+      <div class="r_box tab">
+        <div class="head"> <a class="l active" showBOX="BOX1">好评榜</a> <a class="r" showBOX="BOX2">收藏榜</a> </div>
+        <div class="box BOX1" style="display:block;">
+          <ul>
+            <?=$hao_list;?>
+          </ul>
+        </div>
+        <div class="box BOX2" style="display:none;">
+          <ul>
+            <?=$shou_list;?>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<div class="LayoutDown downLoad">
+  <div class="left">
+    <div class="h" id="sbyou_net_downBox"><strong>电子书下载</strong>（TXT、ZIP、RAR）</div>
+    <div class="con">
+      <div class="box box1">
+        <div class="ma"><img src="<?=$BOOK_URL.'697_QR_Code/index.php?id=669977.net&size=5&level=L&margin=1&url='.$TXT_URL.'?txt-'.$arctype_row['topid'].'-'.$arctype_row['id'].'-'.$arctype_row['lastupdate'].'.html';?>"></div>
+        <div class="t">扫码TXT下载<span id="size_txt_665110"></span></div>
+        <div class="btn txt"><a href="<?=$TXT_URL.'?txt-'.$arctype_row['topid'].'-'.$arctype_row['id'].'-'.$arctype_row['lastupdate'].'.html';?>" title="点击下载{subject}TXT" target="_blank">点击下载{subject}TXT</a></div>
+      </div>
+      <div class="box box2">
+        <div class="ma"><img src="<?=$BOOK_URL.'697_QR_Code/index.php?id=669977.net&size=5&level=L&margin=1&url='.$TXT_URL.'?zip-'.$arctype_row['topid'].'-'.$arctype_row['id'].'-'.$arctype_row['lastupdate'].'.html';?>"></div>
+        <div class="t">扫码ZIP下载<span id="size_zip_665110"></span></div>
+        <div class="btn zip"><a href="<?=$TXT_URL.'?zip-'.$arctype_row['topid'].'-'.$arctype_row['id'].'-'.$arctype_row['lastupdate'].'.html';?>" title="点击下载{subject}ZIP" target="_blank">点击下载{subject}ZIP</a></div>
+      </div>
+      <div class="box box3">
+        <div class="ma"><img src="<?=$BOOK_URL.'697_QR_Code/index.php?id=669977.net&size=5&level=L&margin=1&url='.$TXT_URL.'?rar-'.$arctype_row['topid'].'-'.$arctype_row['id'].'-'.$arctype_row['lastupdate'].'.html';?>"></div>
+        <div class="t">扫码RAR下载<span id="size_rar_665110"></span></div>
+        <div class="btn rar"><a href="<?=$TXT_URL.'?rar-'.$arctype_row['topid'].'-'.$arctype_row['id'].'-'.$arctype_row['lastupdate'].'.html';?>" title="点击下载{subject}RAR" target="_blank">点击下载{subject}RAR</a></div>
+      </div>
+    </div>
+  </div>
+  <div class="right">
+    <div class="h">下载本书的还喜欢下载</div>
+    <div class="con">
+      <div class="picbox">
+        <?php
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and topid!=375 and topid!=376 and booksize!=0 order by downclick desc limit 4");
+        $dsql->Execute();
+        while($www_669977_net=$dsql->GetObject())
+        {
+          $i_txt++;
+          $aid_txt=$www_669977_net->id;
+          $subject_txt=$www_669977_net->typename;
+          
+          $typeimg=ltrim($www_669977_net->typeimg,'/');
+          if(!$typeimg){
+            $randPICID=rand(1,50);
+            $aTHUMB=$BOOK_URL."uploads/empty/".$randPICID.".jpg";
+          }else{
+          	if(strpos("$typeimg","http://")>-1){
+            	$aTHUMB=$typeimg;
+            }else{
+            	$aTHUMB=$BOOK_URL.$typeimg;
+            }
+          }
+
+          $aURL=$BOOK_URL.ltrim($www_669977_net->typedir,'/').'/';
+          if($i_txt==1 || $i_txt==3){
+            $class_txt='f';
+          }else{
+            $class_txt='';
+          }
+          $wwW_sbyOu_Net_txt.='<a class="'.$class_txt.'" href="'.$aURL.'" title="'.$subject_txt.'" target="_blank"><img src="'.$aTHUMB.'" alt="'.$subject_txt.'">'.$subject_txt.'</a>';
+        }
+        echo $wwW_sbyOu_Net_txt;
+        ?>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="clear"></div>
+<a id="comment_done"></a>
+<div class="Layout no_h">
+  <div class="Con jj_pl">
+    <div class="Left">
+      <div class="Head">
+        <h2>评论区</h2>
+        <span class="t">
+        <?=$arctype_row['typename'];?>
+        </span> <span class="j"></span>
+        <div class="morelist">每页显示<b>&nbsp;8&nbsp;</b>条评论</div>
+      </div>
+      <div class="con">
+        <div id="com_box">
+          <ul class="ul_b_list" id="ul_b_list">
+            <br />
+            <br />
+            &nbsp;::&nbsp;正在为您加载评论&hellip;&hellip;<img src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading_data.gif" /> <br />
+            <br />
+            <br />
+          </ul>
+          <div class="bot_more">
+            <div class="page_info">每页显示<b>&nbsp;8&nbsp;</b>条评论，共&nbsp;<b><font id="cms_comments">0</font></b>&nbsp;条</div>
+            <div class="page_num">
+              <div><img src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading_data.gif" id="cIMG" /></div>
+              <div><a class="info">第<b>0</b>页/共0页</a><a class="no" title="已经是第一页了">|&lt;</a><a class="no" title="没有上一页">&lt;&lt;</a></div>
+              <div><a class="no" title="没有下一页">&gt;&gt;</a><a class="no" title="已经是最后一页了">&gt;|</a></div>
+            </div>
+          </div>
+          <script type="text/javascript">ajax_data('com_box','<?=$id;?>','1','no');</script>
+        </div>
+        <div class="comment">
+          <div class="com_head">
+            <h2>发表评论</h2>
+          </div>
+          <div class="com_con">
+            <form name="formcomment" method="post" action="{dede:global.cfg_indexurl/}comment.php?aid=<?=$id;?>" onsubmit="return cgSubmit()">
+              <input type="hidden" name="page_comment" value="page_comment" />
+              <div class="title">
+                <div class="bt">标题：</div>
+                <div class="words_box">
+                  <input type="text" name="comment_title" id="comment_title" tabindex="1" value="这本书很是好看！" title="评论标题" />
+                </div>
+                <div class="div_r"><a href="{dede:global.cfg_indexurl/}paihang.html" target="_blank">排行</a>&nbsp;|&nbsp;<a href="{dede:global.cfg_indexurl/}shuku.html" target="_blank">书库</a></div>
+              </div>
+              <div class="txt">
+                <div class="ny">内容：</div>
+                <div class="words_box">
+                  <textarea name="comment_content" id="comment_content" rows="6" cols="58" tabindex="2" title="评论内容" onchange="cgCount(this)" onkeyup="cgCount(this)"></textarea>
+                </div>
+              </div>
+              <div class="btn">
+                <div class="tj">
+                  <input type="submit" name="newcommu" tabindex="4" value="提交评论" title="提交评论" />
+                </div>
+                <div class="code">
+                  <input type="text" name="regcode" size="7" maxlength="4" id="regcode" tabindex="3" value="">
+                  <img id="vdimgck" align="absmiddle" onclick="this.src=this.src+'?'" style="cursor: pointer;" alt="看不清？点击更换" src="{dede:global.cfg_indexurl/}include/vdimgck.php?"></div>
+                <div class="div_r">剩余字数：<b id="cgNum">360</b>/360</div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+      <div class="con ad600">
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=11"></script>
+      </div>
+      <div class="clear"></div>
+      <div class="Head jp">
+        <h2>精品推荐</h2>
+        <span class="j"></span>
+        <div id="reFRESH"><img src="{dede:global.cfg_indexurl/}templets/{dede:global.cfg_df_style/}/images/loading_data.gif" /><a onclick="ajax_data('bwjp','<?=$arctype_row['topid'];?>','10')" title="查看下一组推荐">&gt;&gt;查看下一组推荐&lt;&lt;</a></div>
+      </div>
+      <div class="con" id="bwjp">
+        <?=SByou_Net_rand('bwjp',$arctype_row['topid'],'10');?>
+      </div>
+    </div>
+    <div class="Right">
+      <div class="r_box author"> {dede:php}echo sBYou_net_zzzf($arctype_row['topid']);{/dede:php} </div>
+      <div class="r_box author art"> {dede:php}echo sbYou_Net_dbz($arctype_row['topid'],'3');{/dede:php} </div>
+      <div class="r_box ad ad336">
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=5"></script>
+      </div>
+      <div class="r_box jj djb">
+        <div class="head">
+          <h2>
+            <?=str_replace('·','',$catalog).'点击榜';?>
+          </h2>
+          <div class="t_btn"> <a name="zhou" title="">周<span class="j"></span></a> <a name="yue" title="" class="active">月<span class="j"></span></a> <a name="zong" title="">总<span class="j"></span></a> </div>
+        </div>
+        <div class="adbox">
+          <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=8"></script>
+        </div>
+        <div class="ul_h"> <span class="pm">排名</span> <span class="sm">书名</span> <span class="djl">点击量</span> </div>
+        <ul class="zhou">
+          <?=page_right('bookclickw',$arctype_row['topid']);?>
+        </ul>
+        <ul class="yue" style="display:block;">
+          <?=page_right('bookclickm',$arctype_row['topid']);?>
+        </ul>
+        <ul class="zong">
+          <?=page_right('bookclick',$arctype_row['topid']);?>
+        </ul>
+        <div class="r_box_bot">
+          <?='<a href="'.$cfg_indexurl.'paihang.html" title="'.str_replace('·','',$catalog).'点击榜" target="_blank"><span>查看更多</span>[ '.str_replace('·','',$catalog).' 点击榜]</a>';?>
+        </div>
+      </div>
+      <div class="r_box jj tjb">
+        <div class="head">
+          <h2>
+            <?=str_replace('·','',$catalog).'推荐榜';?>
+          </h2>
+          <div class="t_btn"></div>
+        </div>
+        <div class="adbox">
+          <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=9"></script>
+        </div>
+        <div class="ul_h"> <span class="pm">排名</span> <span class="sm">书名</span> <span class="djl">点击量</span> </div>
+        <ul>
+          <?=page_right('tuijian',$arctype_row['topid']);?>
+        </ul>
+        <div class="r_box_bot">
+          <?='<a href="'.$cfg_indexurl.'paihang.html" title="'.str_replace('·','',$catalog).'点击榜" target="_blank"><span>查看更多</span>[ '.str_replace('·','',$catalog).' 推荐榜]</a>';?>
+        </div>
+      </div>
+      <div class="r_box jj xsb">
+        <div class="head">
+          <h2>
+            <?=str_replace('·','',$catalog).'新书榜';?>
+          </h2>
+          <div class="t_btn"></div>
+        </div>
+        <div class="adbox">
+          <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=10"></script>
+        </div>
+        <div class="ul_h"> <span class="pm">排名</span> <span class="sm">书名</span> <span class="djl">点击量</span> </div>
+        <ul>
+          <?=page_right('id',$arctype_row['topid']);?>
+        </ul>
+        <div class="r_box_bot">
+          <?='<a href="'.$cfg_indexurl.'paihang.html" title="'.str_replace('·','',$catalog).'点击榜" target="_blank"><span>查看更多</span>[ '.str_replace('·','',$catalog).' 新书榜]</a>';?>
+        </div>
+      </div>
+      <div class="r_box ad ad336">
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=6"></script>
+      </div>
+      <div class="r_box author bjlj">
+        <div class="head">
+          <h2>编辑力荐</h2>
+          <span></span></div>
+        <?=$bj_list;?>
+      </div>
+      <div class="r_box ad ad336 last">
+        <script type="text/javascript" src="{dede:global.cfg_indexurl/}plus/ad_js.php?aid=7"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<!--body结束-->
+<div class="clear"></div>
+{dede:include filename="footer_inner.tpl.htm"/}
+<script>
+function cgCount(message){
+	var lenM=message.value.length;
+	$id("cgNum").innerHTML=360-lenM;
+	$id("cgNum").innerHTML<0?message.value=message.value.substring(0,360):"";
+}
+function cgSubmit(){
+	if($id("cgNum").innerHTML<0){
+		TIP("亲……超出字数限制了哦……");
+		return false;
+	}else if($id("cgNum").innerHTML==360){
+		TIP("亲！请您输入内容哈！");
+		return false;
+	}
+	if(getcookie('Sbyou_neT_comment_<?=$id;?>')){
+	  TIP('抱歉，24小时之内只能评论一次！');
+	  return false;
+	}
+}
+var jiathis_config={data_track_clickback:'true'};
+//统计数据
+sbyou_NeT_ArticleInfo('<?=$id;?>',mid,mname,regdate);
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code_mini/jia.js?uid=1617387" charset="utf-8"></script>
