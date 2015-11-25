@@ -1,0 +1,2 @@
+INSERT INTO `dede_myadtype` VALUES('1','pcµçÄÔ°æ');
+INSERT INTO `dede_myadtype` VALUES('2','wapÊÖ»ú°æ');

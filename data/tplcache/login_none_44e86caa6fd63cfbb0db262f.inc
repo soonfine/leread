@@ -1,0 +1,92 @@
+<?php
+if(!isset($GLOBALS['_vars'])) $GLOBALS['_vars'] = array(); 
+$fields = array();
+
+/*-----------------
+独立功能PHP程序
+开发者：枯叶天
+淘宝店铺：669977.TaOBao.com
+演示站：wWw.SBYoU.net
+官网：wwW.669977.net
+QQ：1981255858
+-----------------*/
+
+$SByou_NET_jump_wap='';
+
+//PC站 演示站 wWw.SbyOu.nEt
+if($entry=='book' || $entry=='relog'){
+  $SByou_NET_jump_wap=SByou_NET_jump_wap($TOUCH_URL,$furl);
+  $sbyou_net_content='
+  <ul>
+    <li><a href="'.$BOOK_URL.'member/login.php" class="name" title="会员登陆" target="_blank">游客</a><em class="ver">|</em></li>
+    <li><a href="'.$BOOK_URL.'member/login.php" title="会员登陆" target="_blank">会员登陆</a><em class="ver">|</em></li>
+    <li><a href="'.$BOOK_URL.'member/index_do.php?fmdo=user&dopost=regnew" title="会员注册" target="_blank">会员注册</a><em class="ver">|</em></li>
+    <li><a href="'.$MOBILE_URL.'" title="普通版手机站" target="_blank">手机站</a><em class="ver">|</em></li>
+    <li><a href="'.$TOUCH_URL.'" title="触屏版手机站" target="_blank" style="color:#F00; text-decoration:underline">触屏版手机站</a><em class="ver">|</em></li>
+    <li class="qq"><a href="https://graph.qq.com/oauth2.0/authorize?client_id='.$appid.'&amp;response_type=token&amp;scope=all&amp;redirect_uri='.$redirecturi.'?entry=qq" title="用QQ账号登陆" target="_blank" style="color:#F00; text-decoration:underline">用QQ账号登陆</a><em class="ver'.$qq_none_02.'">|</em></li>
+    <li class="weibo"><a href="https://api.weibo.com/oauth2/authorize?client_id='.$appkey.'&amp;redirect_uri='.$redirecturi.'?entry=weibo&amp;response_type=code&amp;display=" title="用新浪微博账号登陆" target="_blank" style="color:#F00; text-decoration:underline">用新浪微博账号登陆</a></li>
+  </ul>
+  <script type="text/javascript">var mid="0";var mname="";var regdate="";</script>
+  ';
+}
+
+//搜索站 So.SbyOu.nET
+if($entry=='search'){
+  $SByou_NET_jump_wap=SByou_NET_jump_wap($TOUCH_URL.'search.php');
+  $sbyou_net_content='
+  欢迎，<a href="'.$BOOK_URL.'member/login.php" title="会员登陆" target="_blank">游客</a><span class="hd-tools-sep">|</span><a href="'.$BOOK_URL.'member/login.php" title="会员登陆" target="_blank">会员登陆</a><span class="hd-tools-sep">|</span><a href="'.$BOOK_URL.'member/index_do.php?fmdo=user&dopost=regnew" title="会员注册" target="_blank">会员注册</a><span class="hd-tools-sep">|</span><a href="'.$MOBILE_URL.'" title="普通版手机站" target="_blank">普通版手机站</a><span class="hd-tools-sep">|</span><a href="'.$TOUCH_URL.'" title="触屏版手机站" target="_blank" style="color:#F00; text-decoration:underline">触屏版手机站</a>
+  ';
+}
+
+//手机站 普通版 M.sbYOu.neT
+if($entry=='wap'){
+  $sbyou_net_content='
+  欢迎，游客，<a href="'.$MOBILE_URL.'login.php">快速登陆</a>&nbsp;&nbsp;<a href="'.$MOBILE_URL.'register.php">免费注册</a>
+  <script type="text/javascript">var mid="0";var mname="";var regdate="";</script>
+  ';
+}
+
+//手机站 触屏版 wAp.sByOu.NeT
+if($entry=='wap_touch'){
+  $sbyou_net_content='
+  欢迎，游客，<a href="'.$TOUCH_URL.'login.php">快速登陆</a>&nbsp;&nbsp;<a href="'.$TOUCH_URL.'register.php">免费注册</a>
+  <script type="text/javascript">var mid="0";var mname="";var regdate="";</script>
+  ';
+}
+
+//手机站 触屏版底部 wAp.sByOu.NeT
+if($entry=='wap_touch_bot'){
+  $sbyou_net_content='
+  <a href="'.$TOUCH_URL.'login.php">快速登陆</a>&nbsp;&nbsp;<a href="'.$TOUCH_URL.'register.php">免费注册</a>
+  ';
+}
+
+//登陆状态
+if($entry=='permissions'){
+  $sbyou_net_content='
+  <script type="text/javascript">var mid="0";</script>
+  ';
+}
+
+//首页首屏
+if($entry=='index_log' || $entry=='relog2'){
+  $sbyou_net_content='
+  <div class="logNone">
+  	<a href="https://api.weibo.com/oauth2/authorize?client_id='.$appkey.'&amp;redirect_uri='.$redirecturi.'?entry=weibo&amp;response_type=code&amp;display=" title="用新浪微博账号登陆" target="_blank">用新浪微博账号登陆</a>
+  	<a href="https://graph.qq.com/oauth2.0/authorize?client_id='.$appid.'&amp;response_type=token&amp;scope=all&amp;redirect_uri='.$redirecturi.'?entry=qq" title="用QQ账号登陆" target="_blank">用QQ账号登陆</a>
+  </div>
+  ';
+}
+
+$sbyou_net_content=$SByou_NET_jump_wap.$sbyou_net_content;
+
+if($entry=='relog' || $entry=='relog2'){
+  //输出
+  echo $sbyou_net_content;
+}else{
+  //输出
+  js_write($sbyou_net_content);
+}
+
+SByou_NET_cache('data/tplcache');
+?>
