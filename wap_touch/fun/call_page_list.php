@@ -10,7 +10,7 @@ $entry='list';
 include dirname(__FILE__)."/pageNav.php";
 //ап╠М
 if($total){
-	$dsql->SetQuery($where_sql." order by id asc limit $offset,$num");
+	$dsql->SetQuery($where_sql." order by chapter_no asc, id asc limit $offset,$num");
 	$dsql->Execute();
 	while($SByou_NET=$dsql->GetObject())
 	{

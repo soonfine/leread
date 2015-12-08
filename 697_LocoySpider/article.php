@@ -1,4 +1,5 @@
 <?php
+require_once(dirname(__FILE__)."/../include/common.inc.php");
 //发布内容
 $pageID=$_POST['pageID'];
 $www_669977_net='<p><a href="./?name='.$name.'&pwd='.$pwd.'">返回首页</a></p>';
@@ -50,6 +51,7 @@ if($pageID=='article'){
 	$content=$_POST['content'];
 	$title=trim($_POST['title_669977_net']);
 	$article=$_POST['article'];
+	$chapter_no=$_POST['chapter_no'];
 	
 	$aid='';
 	
@@ -114,8 +116,17 @@ if($pageID=='article'){
 			}else{
 				$www_669977_net.='<p class="red">抱歉，发布失败，请您稍后重试...</p>';
 			}
-		}
-	}
+            if(isset($chapter_no)&&$do_article=='发布成功'){
+                $id_row=$dsql->GetOne("select id from dede_arctype where typename='$subject' and zuozhe='$author' and topid!=45 order by id desc limit 1");
+                if($id_row['id']){
+                    $tid=$id_row['id'];
+                    $dsql->ExecuteNoneQuery("UPDATE dede_archives SET chapter_no='$chapter_no' WHERE typeid='$tid' AND title='$title'");
+				    $www_669977_net.='<p class="red">恭喜您，编号发布成功！</p>';
+                }   
+            }
+
+        }
+    }
 }
 echo $www_669977_net;
 ?>

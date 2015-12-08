@@ -3,6 +3,7 @@
   <h2>
     <?=$arc_row['typename'];?>
   </h2>
+      <br><a href="<?=$cfg_indexurl;?>error_report.php?id=<?=$arc_row['id'];?>"  target="_blank" title="error_report"><b>章节乱序/缺失/空白/错误请点击报错，我将会第一时间解决</b></a>
 </div>
 <div id="page_list">
   <div class="goodsBody list"> <a href="javascript:(0)" class="data" style="border-top:none;"><img src="<?=$TOUCH_URL;?>images/loading_data.gif" style="display:inline;" />&nbsp;正在加载内容...</a> 

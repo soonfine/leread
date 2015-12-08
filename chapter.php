@@ -17,9 +17,9 @@ if(!$id){
 }
 if(!is_numeric($id)){
 	$id='/'.$id;	
-	$id_row=$dsql->GetOne("select * from dede_arctype where typedir='$id' and topid!=45 limit 1");
-	if(!$id_row['id']){
-		SBYOU_net_error('1','请指定正确的文档！');
+	$id_row=$dsql->GetOne("select * from dede_arctype where typedir='$id' and topid!=45 order by id desc limit 1");
+    if(!$id_row['id']){
+        SBYOU_net_error('1','请指定正确的文档！');
 	}	
 	$id=$id_row['id'];
 	$topid=$id_row['topid'];
@@ -35,7 +35,7 @@ $templets=$cfg_indexurl.'templets/'.sbyou_net_sysconfig('cfg_df_style');
 //小说封面
 $arctype_row=$dsql->GetOne("select * from dede_arctype where id=$id limit 1");
 //小说章节
-$dsql->SetQuery("select * from dede_archives where typeid=$id order by pubdate");
+$dsql->SetQuery("select * from dede_archives where typeid=$id order by chapter_no asc,id asc");
 $dsql->Execute();
 while($archives_row=$dsql->GetObject())
 {

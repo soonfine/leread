@@ -798,8 +798,12 @@ class Archives
         if(count($this->PreNext)<2)
         {
             $aid = $this->ArcID;
-            $preR =  $this->dsql->GetOne("Select id From `#@__arctiny` where id<$aid And arcrank>-1 And typeid='{$this->Fields['typeid']}' order by id desc");
-            $nextR = $this->dsql->GetOne("Select id From `#@__arctiny` where id>$aid And arcrank>-1 And typeid='{$this->Fields['typeid']}' order by id asc");
+            $chapR = $this->dsql->GetOne("SELECT chapter_no FROM dede_archives WHERE id=$aid");
+            $chapter_no = (is_array($chapR) ? $chapR['chapter_no'] : '0');  
+            $prlimit= ($chapter_no==='0' ? "id<$aid" : "chapter_no<$chapter_no"); 
+            $nelimit= ($chapter_no==='0' ? "id>$aid" : "chapter_no>$chapter_no"); 
+            $preR =  $this->dsql->GetOne("Select id From `#@__archives` where $prlimit  And arcrank>-1 And typeid='{$this->Fields['typeid']}' order by chapter_no desc,id desc");
+            $nextR = $this->dsql->GetOne("Select id From `#@__archives` where $nelimit And arcrank>-1 And typeid='{$this->Fields['typeid']}' order by chapter_no asc,id asc");
             $next = (is_array($nextR) ? " where arc.id={$nextR['id']} " : ' where 1>2 ');
             $pre = (is_array($preR) ? " where arc.id={$preR['id']} " : ' where 1>2 ');
             $query = "Select arc.id,arc.title,arc.shorttitle,arc.typeid,arc.ismake,arc.senddate,arc.arcrank,arc.money,arc.filename,arc.litpic,

@@ -13,6 +13,7 @@
     </h2>
     <div class="info"> {dede:php}
       echo '作者:<a href="'.$cfg_indexurl.'author/?'.$arctype_row[id].'.html" target="_blank" title="'.$arctype_row[zuozhe].'">'.$arctype_row[zuozhe].'</a>&nbsp;|&nbsp;更新时间:'.date('Y-m-d H:i',$arctype_row['lastupdate']);
+      echo '<br><br><a href="'.$cfg_indexurl.'error_report.php?id='.$arctype_row['id'].'"  target="_blank" title="error_report"><b>章节乱序/缺失/空白/错误请点击报错，我将会第一时间解决</b></a>';
       {/dede:php} </div>
     <div class="box_box">
       <ul>

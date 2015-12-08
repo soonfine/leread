@@ -8,7 +8,7 @@
     <div class="con">
       <ul class="list">
         {dede:php}
-        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 and overdate=0 order by bookclick desc limit 0,15");
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by bookclick desc limit 0,15");
         $dsql->Execute();
         while($sbyou_net_row=$dsql->GetObject())
         {
