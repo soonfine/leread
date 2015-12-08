@@ -18,8 +18,8 @@ if(!$id){
 if(!is_numeric($id)){
 	$id='/'.$id;	
 	$id_row=$dsql->GetOne("select * from dede_arctype where typedir='$id' and topid!=45 order by id desc limit 1");
-    if(!$id_row['id']){
-        SBYOU_net_error('1','请指定正确的文档！');
+	if(!$id_row['id']){
+		SBYOU_net_error('1','请指定正确的文档！');
 	}	
 	$id=$id_row['id'];
 	$topid=$id_row['topid'];
