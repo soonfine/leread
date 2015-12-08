@@ -116,7 +116,7 @@ if($pageID=='article'){
 			}else{
 				$www_669977_net.='<p class="red">抱歉，发布失败，请您稍后重试...</p>';
 			}
-            if(isset($chapter_no)&&$do_article=='发布成功'){
+            if(isset($chapter_no)&&($do_article=='发布成功'||$do_article=='章节已经存在')){
                 $id_row=$dsql->GetOne("select id from dede_arctype where typename='$subject' and zuozhe='$author' and topid!=45 order by id desc limit 1");
                 if($id_row['id']){
                     $tid=$id_row['id'];

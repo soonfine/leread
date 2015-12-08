@@ -23,15 +23,19 @@ echo '
 </script>
 ';
 
+$chapter_no=$chapter_row['chapter_no'];
+$prli = ($chapter_no === '0' ? "id<$aid" : "chapter_no<$chapter_no");
+$neli = ($chapter_no === '0' ? "id>$aid" : "chapter_no>$chapter_no");
+
 //上一章
-$pre_row=$dsql->GetOne("select * from dede_archives where id<'$id' and typeid=$chapter_row[typeid] order by id desc limit 1");
+$pre_row=$dsql->GetOne("select * from dede_archives where $prli and typeid=$chapter_row[typeid] order by chapter_no desc,id desc limit 1");
 if($pre_row['id']){
 	$pre='<a href="'.$TOUCH_URL.'archive.php?aid='.$pre_row['id'].'" class="left">上一章</a>';
 }else{
 	$pre='<a href="javascript:(0)" class="left none">无上一章</a>';
 }
 //下一章
-$next_row=$dsql->GetOne("select * from dede_archives where id>'$id' and typeid=$chapter_row[typeid] order by id asc limit 1");
+$next_row=$dsql->GetOne("select * from dede_archives where $neli and typeid=$chapter_row[typeid] order by chapter_no asc,id asc limit 1");
 if($next_row['id']){
 	$next='<a href="'.$TOUCH_URL.'archive.php?aid='.$next_row['id'].'" class="left right">下一章</a>';
 }else{
