@@ -1,6 +1,0 @@
-INSERT INTO `dede_flink` VALUES('33','1','http://www.669977.net/','697原创源码商城','','','','1408366916','1','1');
-INSERT INTO `dede_flink` VALUES('34','1','http://book.sbyou.net/','醉爱小说网','','','','1408366941','1','1');
-INSERT INTO `dede_flink` VALUES('35','1','http://joke.669977.net/','697笑话网','','','','1408366969','1','1');
-INSERT INTO `dede_flink` VALUES('36','1','http://669977.taobao.com/','697源码[淘宝店铺]','','','','1408367033','1','1');
-INSERT INTO `dede_flink` VALUES('37','1','http://joke.xiaobaibu.com/','醉爱笑话网','','','','1408367051','1','1');
-INSERT INTO `dede_flink` VALUES('38','1','http://joke.sbyou.net/','爆笑世界','','','','1408367066','1','1');

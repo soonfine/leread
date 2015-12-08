@@ -1,1 +1,0 @@
-<p style='line-height:150%'>нч</p>
