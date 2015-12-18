@@ -1,10 +1,10 @@
 <?php
 include_once dirname(__FILE__).'/base.inc.php';
-$fuck=$_GET['fuck'];
+$fuck=htmlspecialchars($_GET['fuck']);
 empty($fuck)?$fuck='subject':'';
-$searchword=trim(strip_tags($_GET['searchword']));
+$searchword=trim(strip_tags(htmlspecialchars($_GET['searchword'])));
 $searchword=="请输入您要搜索的内容"?$searchword='':'';
-$page=$_GET['page'];
+$page=htmlspecialchars($_GET['page']);
 ?>
 <!DOCTYPE html>
 <html>
