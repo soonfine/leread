@@ -42,85 +42,85 @@ if(!$pageID){
 	';
 }
 if($pageID=='article'){
-	$subject=trim($_POST['subject_669977_net']);
-	$caid=trim($_POST['caid']);
-	$author=trim($_POST['author']);
-	$ready_1=$_POST['ready_1'];
-	$abover=trim($_POST['abover']);
-	$thumb=$_POST['thumb'];
-	$content=$_POST['content'];
-	$title=trim($_POST['title_669977_net']);
-	$article=$_POST['article'];
-	$chapter_no=$_POST['chapter_no'];
-	$source=$_POST['source'];
+    $subject=trim($_POST['subject_669977_net']);
+    $caid=trim($_POST['caid']);
+    $author=trim($_POST['author']);
+    $ready_1=$_POST['ready_1'];
+    $abover=trim($_POST['abover']);
+    $thumb=$_POST['thumb'];
+    $content=$_POST['content'];
+    $title=trim($_POST['title_669977_net']);
+    $article=$_POST['article'];
+    $chapter_no=$_POST['chapter_no'];
+    $source=$_POST['source'];
 
     if($source!==NULL&&$sourcei!==""){
         $source="http://".array_pop(split("http://",$source));
     }
-	
-	$aid='';
-	
-	if(!$subject || !$caid || !$title || !$article){
-		$www_669977_net.='<p class="red">抱歉，数据不完整...</p>';
-	}
-	//处理分类
-	foreach($caid_Array as $key=>$value){
-		$c_I++;
-		if($c_I=='1'){
-			$caid_First=$key;
-		}
-		if(strpos($value,$caid)>-1){
-			$caid_result=$key;
-			break;
-		}
-	}
-	if(!$caid_result){
-		foreach($caid_Array as $key=>$value){
-			if(strpos($value,mb_substr($caid,0,2,'utf-8'))>-1){
-				$caid_result=$key;
-				break;
-			}
-		}
-	}
-	if(!$caid_result){
-		$caid_result=$caid_First;
-	}
-	//处理完结
-	if($abover){
-		foreach($abover_Array as $key=>$value){
-			if(strpos($abover,$value)>-1){
-				$abover_result=time();
-				break;
-			}
-		}
-	}else{
-		foreach($abover_Array as $key=>$value){
-			if(strpos($title,$value)>-1){
-				$abover_result=time();
-				break;
-			}
-		}
-	}
-	if(!$abover_result){
-		$abover_result='';
-	}
-	//小说主信息
-	$do_subject=sbyou_NET_subject($subject,$author,$ready_1,$thumb,$content);
-	if(!$do_subject || $do_subject=='发布失败'){
-		$www_669977_net.='<p class="red">抱歉，发布失败，请您稍后重试...</p>';
-	}else{
-		if($do_subject=='跳过火车采集'){
-			$www_669977_net.='<p class="red">恭喜您，发布成功！但是并未入库，因为此小说已经设置为“不参与火车头采集”！</p>';
-		}else{
-			//小说副信息
-			$do_article=sbyou_NET_title($subject,$title,$article);
-			if($do_article=='章节已经存在'){
-				$www_669977_net.='<p class="red">恭喜您，发布成功！但是并未入库，因为此章节已经存在！</p>';
-			}else if($do_article=='发布成功'){
-				$www_669977_net.='<p class="red">恭喜您，发布成功！</p>';
-			}else{
-				$www_669977_net.='<p class="red">抱歉，发布失败，请您稍后重试...</p>';
-			}
+
+    $aid='';
+
+    if(!$subject || !$caid || !$title || !$article){
+        $www_669977_net.='<p class="red">抱歉，数据不完整...</p>';
+    }
+    //处理分类
+    foreach($caid_Array as $key=>$value){
+        $c_I++;
+        if($c_I=='1'){
+            $caid_First=$key;
+        }
+        if(strpos($value,$caid)>-1){
+            $caid_result=$key;
+            break;
+        }
+    }
+    if(!$caid_result){
+        foreach($caid_Array as $key=>$value){
+            if(strpos($value,mb_substr($caid,0,2,'utf-8'))>-1){
+                $caid_result=$key;
+                break;
+            }
+        }
+    }
+    if(!$caid_result){
+        $caid_result=$caid_First;
+    }
+    //处理完结
+    if($abover){
+        foreach($abover_Array as $key=>$value){
+            if(strpos($abover,$value)>-1){
+                $abover_result=time();
+                break;
+            }
+        }
+    }else{
+        foreach($abover_Array as $key=>$value){
+            if(strpos($title,$value)>-1){
+                $abover_result=time();
+                break;
+            }
+        }
+    }
+    if(!$abover_result){
+        $abover_result='';
+    }
+    //小说主信息
+    $do_subject=sbyou_NET_subject($subject,$author,$ready_1,$thumb,$content);
+    if(!$do_subject || $do_subject=='发布失败'){
+        $www_669977_net.='<p class="red">抱歉，发布失败，请您稍后重试...</p>';
+    }else{
+        if($do_subject=='跳过火车采集'){
+            $www_669977_net.='<p class="red">恭喜您，发布成功！但是并未入库，因为此小说已经设置为“不参与火车头采集”！</p>';
+        }else{
+            //小说副信息
+            $do_article=sbyou_NET_title($subject,$title,$article);
+            if($do_article=='章节已经存在'){
+                $www_669977_net.='<p class="red">恭喜您，发布成功！但是并未入库，因为此章节已经存在！</p>';
+            }else if($do_article=='发布成功'){
+                $www_669977_net.='<p class="red">恭喜您，发布成功！</p>';
+            }else{
+                $www_669977_net.='<p class="red">抱歉，发布失败，请您稍后重试...</p>';
+            }
             if(isset($source)&&$source!==""){
                 $dsql->ExecuteNoneQuery("UPDATE dede_arctype SET source='$source' where typename='$subject' and zuozhe='$author' and topid!=45");
             }
@@ -129,7 +129,7 @@ if($pageID=='article'){
                 if($id_row['id']){
                     $tid=$id_row['id'];
                     $dsql->ExecuteNoneQuery("UPDATE dede_archives SET chapter_no='$chapter_no' WHERE typeid='$tid' AND title='$title'");
-				    $www_669977_net.='<p class="red">恭喜您，编号发布成功！</p>';
+                    $www_669977_net.='<p class="red">恭喜您，编号发布成功！</p>';
                 }   
             }
 
