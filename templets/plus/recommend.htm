@@ -17,7 +17,7 @@
 </div><!-- /header -->
 <div class="w960 clear center mt1 cmt-box">
   <div class="sp-title">
-    <h2>推荐：<?php echo $title; ?></h2>
+    <h2>推荐：<?php echo htmlspecialchars($title); ?></h2>
 </div>
   <div class="formbox">
 <form name="form1" method="post" action="recommend.php">
@@ -35,7 +35,7 @@
 你好，我在 [<?php echo $cfg_webname; ?>] 发现了一个很好的东东：
 你不妨去看看吧！
 
-文档的名称是：<?php echo $title; ?>
+文档的名称是：<?php echo htmlspecialchars($title); ?>
 
 网址是：<?php $arcUrl = ($cfg_multi_site != 'Y' ? $cfg_basehost : '').$arcurl; echo $arcUrl;?>
 </textarea></td>

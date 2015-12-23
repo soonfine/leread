@@ -8,7 +8,7 @@
     <div class="con">
       <ul class="list">
         {dede:php}
-        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize!=0 order by bookclick desc limit 0,15");
+        $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize>100000 and bookclick>100 order by RAND() desc limit 0,15");
         $dsql->Execute();
         while($sbyou_net_row=$dsql->GetObject())
         {
@@ -74,7 +74,7 @@
   </div>
   <div class="Con">
     <div class="Left"> {dede:php}
-      $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize>=1000000 order by bookclick desc limit 9");
+      $dsql->SetQuery("select * from dede_arctype where topid!=0 and topid!=45 and booksize>=1000000 order by RAND() desc limit 9");
       $dsql->Execute();
       while($sbyou_net_row=$dsql->GetObject())
       {

@@ -985,7 +985,7 @@ function sbyou_net_SPnew(){
 function sbyou_net_DJB(){
 	global $dsql,$cfg_indexurl;
 	$catID=1;
-	$dsql->SetQuery("select id,typename,zuozhe,typedir,typeimg,description from dede_arctype where topid!='0' and  topid!='45' and ishidden=0 order by bookclick desc limit 5");
+	$dsql->SetQuery("select id,typename,zuozhe,typedir,typeimg,description from dede_arctype where topid!='0' and  topid!='45' and ishidden=0 and bookclick>100 order by RAND() desc limit 5");
 	$dsql->Execute();
 	while($www_669977_net=$dsql->GetObject())
 	{

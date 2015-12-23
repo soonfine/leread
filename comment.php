@@ -16,10 +16,10 @@ if (get_magic_quotes_gpc()) {
   $_POST=stripslashes_array($_POST);
 }
 
-$aid=$_GET['aid'];
-$page_comment=$_POST['page_comment'];
-$comment_title=$_POST['comment_title'];
-$comment_content=$_POST['comment_content'];
+$aid=htmlspecialchars($_GET['aid']);
+$page_comment=htmlspecialchars($_POST['page_comment']);
+$comment_title=htmlspecialchars($_POST['comment_title']);
+$comment_content=htmlspecialchars($_POST['comment_content']);
 
 $forward=$_SERVER['HTTP_REFERER'];
 $cur_url=this.location.href;

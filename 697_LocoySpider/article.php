@@ -85,6 +85,8 @@ if($pageID=='article'){
     if(!$caid_result){
         $caid_result=$caid_First;
     }
+
+
     //处理完结
     if($abover){
         foreach($abover_Array as $key=>$value){
@@ -109,6 +111,14 @@ if($pageID=='article'){
     if(!$do_subject || $do_subject=='发布失败'){
         $www_669977_net.='<p class="red">抱歉，发布失败，请您稍后重试...</p>';
     }else{
+        $row=$dsql->GetOne("select * from dede_arctype where typename='$subject' and zuozhe='$author' and topid='$caid_result' order by id desc limit 1");
+        if($row['id']){
+            $cnt=$dsql->GetOne("select count(id) as cnt from dede_arctype where typedir='".$row['typedir']."'");
+            $name="/".Pinyin($subject).rand(0,100);
+            if(intval($cnt['cnt'])>1){
+                $dsql->ExecuteNoneQuery("UPDATE dede_arctype SET typedir='$name' where id='".$row['id']."'");
+            }
+        }   
         if($do_subject=='跳过火车采集'){
             $www_669977_net.='<p class="red">恭喜您，发布成功！但是并未入库，因为此小说已经设置为“不参与火车头采集”！</p>';
         }else{
@@ -122,12 +132,14 @@ if($pageID=='article'){
                 $www_669977_net.='<p class="red">抱歉，发布失败，请您稍后重试...</p>';
             }
             if(isset($source)&&$source!==""){
-                $dsql->ExecuteNoneQuery("UPDATE dede_arctype SET source='$source' where typename='$subject' and zuozhe='$author' and topid!=45");
+                $dsql->ExecuteNoneQuery("UPDATE dede_arctype SET source='$source' where id='".$row['id']."'");
             }
             if(isset($chapter_no)&&($do_article=='发布成功'||$do_article=='章节已经存在')){
-                $id_row=$dsql->GetOne("select id from dede_arctype where typename='$subject' and zuozhe='$author' and topid!=45 order by id desc limit 1");
-                if($id_row['id']){
-                    $tid=$id_row['id'];
+                $arr=explode('/',$chapter_no);
+                $arr=explode('.',array_pop($arr));
+                $chapter_no=$arr[0];
+                if($row['id']){
+                    $tid=$row['id'];
                     $dsql->ExecuteNoneQuery("UPDATE dede_archives SET chapter_no='$chapter_no' WHERE typeid='$tid' AND title='$title'");
                     $www_669977_net.='<p class="red">恭喜您，编号发布成功！</p>';
                 }   
